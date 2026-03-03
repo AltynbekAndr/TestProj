@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Профиль пользователя</title>
+    <link rel="icon" href="/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:Arial,sans-serif;background-color:#343a40;color:#fff;display:flex;flex-direction:column;min-height:100vh}
+        header{background-color:#495057;padding:15px;text-align:center;border-bottom:2px solid #ffc107}
+        header h1{margin-bottom:10px;font-size:2.5rem;color:#ffffff}header p{font-size:1.2rem;color:#ffffff}
+        .navbar{background-color:#495057;padding:10px;text-align:center;border-bottom:2px solid #ffc107}.navbar a{color:#ffc107;text-decoration:none;margin:0 15px;font-size:1rem}.navbar a:hover{text-decoration:underline}
+        .container{flex:1;padding:20px;max-width:1200px;margin:0 auto}
+        .profile-section{background-color:#495057;border-radius:10px;padding:20px;margin-bottom:20px;box-shadow:0 4px 8px rgba(0,0,0,.2)}
+        .profile-section h2{font-size:1.8rem;margin-bottom:15px;color:#ffc107}
+        .profile-section p{font-size:1rem;margin-bottom:10px}
+        .profile-section input[type=text], .profile-section input[type=email], .profile-section input[type=password]{width:100%;padding:10px;border:1px solid #6c757d;border-radius:5px;background-color:#495057;color:#fff;font-size:1rem;margin-bottom:10px}
+        .profile-section input[type=submit]{background-color:#ffc107;color:#000;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;transition:background-color .3s;font-size:1rem}
+        .profile-section input[type=submit]:hover{background-color:#e0a800}
+        .card-item h3, .swift-item h3{font-size:1rem;margin-bottom:5px;color:#ffc107}
+        .card-item p, .swift-item p{margin-bottom:5px}
+        .add-section{margin-top:20px}
+        .add-section form{background-color:#495057;border-radius:10px;padding:20px;box-shadow:0 4px 8px rgba(0,0,0,.2)}
+        .add-section form label{display:block;margin-bottom:10px;color:#fff}
+        .add-section form input[type=text], .add-section form input[type=submit]{width:100%;padding:10px;border:1px solid #6c757d;border-radius:5px;background-color:#495057;color:#fff;font-size:1rem;margin-bottom:10px}
+        .add-section form input[type=submit]{background-color:#ffc107;color:#000;cursor:pointer}
+        .add-section form input[type=submit]:hover{background-color:#e0a800}
+        #add-swift-form textarea{width:100%;padding:10px;border:1px solid #6c757d;border-radius:5px;background-color:#495057;color:#fff;font-size:1rem;margin-bottom:15px}
+        #profile-form{margin-bottom:15px;}
+        header img{width:150px;height:auto;margin:0 20px}
+        footer {
+            background-color: #ff0000;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        header {
+            background-image: url('/img/background1.webp'); /* Замените путь на путь к вашей картинке */
+            background-size: cover; /* Обеспечивает, чтобы изображение занимало весь фон */
+            background-position: center; /* Центрирует изображение */
+            background-repeat: no-repeat; /* Не повторяет изображение */
+            color: white; /* Цвет текста, чтобы он был виден на фоне */
+            padding: 20px; /* Отступы внутри header */
+        }
+        .account-section {
+            margin-bottom: 20px;
+        }
+
+        .account-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .account-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .account-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .account-info {
+            margin: 5px 0;
+        }
+
+        .account-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .account-value {
+            color: #555;
+            margin-left: 10px;
+        }
+        input, select {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        select {
+            background-color: #495057;
+            color: #fff;
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #ffc107;
+        }
+        .promo-code, .ref-link {
+            color: #555;
+            margin-left: 10px;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            font-size: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .promo-code h3, .ref-link h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .promo-code p, .ref-link p {
+            font-size: 0.9rem;
+            color: #495057;
+            word-break: break-word;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Таблица стилей */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            color: #495057;
+        }
+
+        table thead th {
+            background-color: #495057;
+            color: #fff;
+            font-weight: bold;
+            padding: 10px;
+            border: 1px solid #ced4da;
+        }
+
+        table tbody td {
+            border: 1px solid #ced4da;
+            padding: 10px;
+            text-align: center;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Катран</h1>
+    <p>Играй, выигрывай и развлекайся!</p>
+    <img src="/img/777.png" alt="Right Icon" class="title-icon">
+</header>
+
+<div class="navbar">
+    <a href="mainIndex">Домой</a>
+    <a href="profile">Мой профиль</a>
+    <a href="chat">Чат/Обсуждение/Вопросы</a>
+    <a href="help">Помощь</a>
+</div>
+
+<div class="container">
+    <section class="profile-section">
+        <h2>Личный Профиль</h2>
+        <form id="profile-form" method="post" action="profile/save-profile">
+            <label for="user-name">Имя пользователя</label>
+            <input type="text" id="user-name" name="username" th:field="*{user.username}" required placeholder="Имя пользователя">
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" th:field="*{user.email}" required placeholder="Введите email">
+
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" th:field="*{user.password}" required placeholder="Введите пароль">
+
+            <label for="country">Страна</label>
+            <br>
+            <select id="country" name="country" required>
+                <option value="" disabled>Выберите страну</option>
+                <option value="russia" th:selected="${user.country == 'russia'}">Россия</option>
+                <option value="kazakhstan" th:selected="${user.country == 'kazakhstan'}">Казахстан</option>
+                <option value="belarus" th:selected="${user.country == 'belarus'}">Беларусь</option>
+                <option value="armenia" th:selected="${user.country == 'armenia'}">Армения</option>
+                <option value="azerbaijan" th:selected="${user.country == 'azerbaijan'}">Азербайджан</option>
+                <option value="kyrgyzstan" th:selected="${user.country == 'kyrgyzstan'}">Кыргызстан</option>
+                <option value="moldova" th:selected="${user.country == 'moldova'}">Молдова</option>
+                <option value="tajikistan" th:selected="${user.country == 'tajikistan'}">Таджикистан</option>
+                <option value="turkmenistan" th:selected="${user.country == 'turkmenistan'}">Туркменистан</option>
+                <option value="uzbekistan" th:selected="${user.country == 'uzbekistan'}">Узбекистан</option>
+            </select>
+            <br>
+            <input type="submit" value="Сохранить изменения">
+        </form>
+
+
+
+
+        <h2>Мои счета и карты для вывода средств</h2>
+
+        <!-- Отображение карточных счетов -->
+        <div class="account-section card-list" id="card-list">
+            <h3>Карточные счета</h3>
+            <ul class="account-list">
+                <th:block th:each="account : ${accounts}">
+                    <th:block th:if="${#strings.startsWith(account.accountType, 'CARD')}">
+                        <li class="account-item">
+                            <div class="account-info">
+                                <span class="account-label">Номер счета:</span>
+                                <span class="account-value" th:text="${account.accountNumber}"></span>
+                            </div>
+                            <div class="account-info">
+                                <span class="account-label">Тип счета:</span>
+                                <span class="account-value" th:text="${account.accountType}"></span>
+                            </div>
+                        </li>
+                    </th:block>
+                </th:block>
+            </ul>
+        </div>
+
+        <!-- Отображение SWIFT счетов -->
+        <div class="account-section swift-list" id="swift-list">
+            <h3>SWIFT счета</h3>
+            <ul class="account-list">
+                <th:block th:each="account : ${accounts}">
+                    <th:block th:if="${#strings.startsWith(account.accountType, 'SWIFT')}">
+                        <li class="account-item">
+                            <div class="account-info">
+                                <span class="account-label">Номер счета:</span>
+                                <span class="account-value" th:text="${account.accountNumber}"></span>
+                            </div>
+                            <div class="account-info">
+                                <span class="account-label">Тип счета:</span>
+                                <span class="account-value" th:text="${account.accountType}"></span>
+                            </div>
+                            <div class="account-info">
+                                <span class="account-label">Имя клиента:</span>
+                                <span class="account-value" th:text="${account.customerName}"></span>
+                            </div>
+                            <div class="account-info">
+                                <span class="account-label">Информация:</span>
+                                <span class="account-value" th:text="${account.info}"></span>
+                            </div>
+                            <div class="account-info">
+                                <span class="account-label">Сумма:</span>
+                                <span class="account-value" th:text="${account.amount}"></span>
+                            </div>
+                        </li>
+                    </th:block>
+                </th:block>
+            </ul>
+        </div>
+
+
+        <div class="account-section crypto-list" id="crypto-list">
+            <h3>Криптовалютные счета</h3>
+            <ul class="account-list">
+                <th:block th:each="account : ${accounts}">
+                    <th:block th:if="${#strings.startsWith(account.accountType, 'Crypto')}">
+                        <li class="account-item">
+                            <div class="account-info">
+                                <span class="account-label">Адрес кошелька:</span>
+                                <span class="account-value" th:text="${account.accountNumber}"></span>
+                            </div>
+                            <div class="account-info">
+                                <span class="account-label">Тип счета:</span>
+                                <span class="account-value" th:text="${account.accountType}"></span>
+                            </div>
+                            <div class="account-info">
+                                <span class="account-label">Сумма:</span>
+                                <span class="account-value" th:text="${account.amount}"></span>
+                            </div>
+                        </li>
+                    </th:block>
+                </th:block>
+            </ul>
+        </div>
+
+
+        <div class="add-section">
+            <h2>Добавить новые данные</h2>
+            <form id="add-card-form" method="post" action="profile/save-card-account">
+                <label for="card-number">Номер карты</label>
+                <input type="text" id="card-number" name="cardNumber" placeholder="Введите номер карты" required>
+
+                <input type="submit" value="Добавить карту">
+            </form>
+
+            <form id="add-swift-form" style="margin-top:20px;" method="post" action="profile/save-swift-account">
+                <label for="swift-code">SWIFT код банка</label>
+                <input type="text" id="swift-code" name="swift-code" placeholder="Введите SWIFT код" required>
+
+                <label for="swift-name">ФИО владельца счета</label>
+                <input type="text" id="swift-name" name="swift-name" placeholder="Введите ФИО" required>
+
+                <label for="swift-account">Номер банковского счета</label>
+                <input type="text" id="swift-account" name="swift-account" placeholder="Введите номер счета" required>
+
+                <label for="additional-info">Дополнительная информация,
+                    Банк-посредник (если есть): Укажите название, адрес и SWIFT/BIC код банка-посредника.
+                    Контрагент (если есть): Укажите название, адрес и SWIFT/BIC код контрагента или корреспондентского банка.</label>
+                <textarea id="additional-info" name="additional-info" placeholder="Введите дополнительную информацию"></textarea>
+
+
+                <input type="submit" value="Добавить SWIFT счет">
+            </form>
+            <form id="add-crypto-form" style="margin-top:20px;" method="post" action="profile/save-crypto-account">
+                <label for="crypto-type">Тип счета</label>
+                <select id="crypto-type" name="crypto-type" required>
+                    <option value="USDT">USDT</option>
+                    <option value="BTC">BTC</option>
+                    <option value="ETH">ETH</option>
+                </select>
+
+                <label for="crypto-wallet">Адрес кошелька</label>
+                <input type="text" id="crypto-wallet" name="crypto-wallet" placeholder="Введите адрес кошелька" required>
+
+                <input type="submit" value="Добавить кошелек">
+            </form>
+        </div>
+    </section>
+    <div class="promo-code">
+        <h3>Ваш промокод:</h3>
+        <p id="promo-code" th:text="${user.promoCode}"></p>
+    </div>
+    <div class="ref-link">
+        <h3>Ваша реферальная ссылка:</h3>
+        <!-- Генерация ссылки с использованием промокода -->
+        <p id="ref-link" th:text="'http://katran.site/registration?promoCode=' + ${user.promoCode}">LOADING...</p>
+    </div>
+    <div>
+        <h2>Привлечённые игроки</h2>
+        <p>Общее количество рефералов: <span th:text="${referralCount}">0</span></p>
+
+        <table border="1" cellpadding="10">
+            <thead>
+            <tr>
+                <th>Привлечённый игрок</th>
+            </tr>
+            </thead>
+            <tbody id="referrals-table">
+            <!-- Динамическое добавление данных о привлечённых игроках -->
+            <tr th:each="referral : ${referrals}">
+                <td th:text="${referral.username}">Имя игрока</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Катран. Все права защищены.</p>
+</footer>
+
+
+</body>
+</html>

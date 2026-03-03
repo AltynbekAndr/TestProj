@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Катран</title>
+    <link rel="icon" href="/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1e1e1e;
+            color: #fff;
+        }
+
+        header {
+            background: linear-gradient(to right, #ff0000, #ff6600);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .hero {
+            padding: 100px 0;
+            background-image: url('https://source.unsplash.com/1600x900/?casino,slots');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background-color: #ffcc00;
+            color: #000;
+            text-decoration: none;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #ffb700;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            padding: 50px 0;
+        }
+
+        .feature-box {
+            width: 30%;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #ffcc00;
+        }
+
+        .feature-box p {
+            font-size: 1rem;
+        }
+
+        .gif-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .gif-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        footer {
+            background-color: #ff0000;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        @media(max-width: 768px) {
+            .features {
+                flex-direction: column;
+            }
+
+            .feature-box {
+                width: 80%;
+                margin: 0 auto 20px;
+            }
+        }
+		header img {
+		width: 250px; /* Устанавливаем одинаковый размер для обеих иконок */
+		height: auto;
+		margin: 0 20px; /* Отступы слева и справа от иконок */
+		}
+        header {
+            background-image: url('/img/new_background.webp'); /* Замените путь на путь к вашей картинке */
+            background-size: cover; /* Обеспечивает, чтобы изображение занимало весь фон */
+            background-position: center; /* Центрирует изображение */
+            background-repeat: no-repeat; /* Не повторяет изображение */
+            color: white; /* Цвет текста, чтобы он был виден на фоне */
+            padding: 20px; /* Отступы внутри header */
+        }
+    </style>
+</head>
+<body>
+
+<header >
+    <h1>Катран</h1>
+	<img src="/img/169326.png" alt="Right Icon" class="title-icon">
+    <p>Взлетите к выигрышам и джекпотам!</p>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <h2>Играйте и выигрывайте!</h2>
+        <p>Присоединяйтесь к нам для захватывающих игр, больших выигрышей и незабываемых эмоций.</p>
+        <a href="mainIndex" class="btn">Начать Игру</a>
+    </div>
+</section>
+
+<section class="gif-container">
+    <img src="/img/giphy.gif" alt="Rocket Animation">
+</section>
+
+<section class="features">
+    <div class="feature-box">
+        <h3>Катран</h3>
+        <p>Верь в свою удачу! Вращай колесо и сорви победу!</p>
+    </div>
+    <div class="feature-box">
+        <h3>Поддержка 24/7</h3>
+        <p>Наша команда поддержки всегда готова помочь вам с любыми вопросами и проблемами.</p>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2024 Катран. Все права защищены.</p>
+</footer>
+
+</body>
+</html>

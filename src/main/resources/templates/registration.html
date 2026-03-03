@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Катран</title>
+    <link rel="icon" href="/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #343a40;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #495057;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #ffc107;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        input[type="submit"] {
+            background-color: #ffc107;
+            color: #000;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #e0a800;
+        }
+
+        .small-text {
+            font-size: 0.8rem;
+            text-align: center;
+            color: #adb5bd;
+            margin-top: 10px;
+        }
+
+        select {
+            background-color: #495057;
+            color: #fff;
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #ffc107;
+        }
+		a {
+            color: #ffc107;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Регистрация</h2>
+    <div>
+        <p th:if="${error == 'username'}">Пользователь с таким именем уже существует.</p>
+        <p th:if="${error == 'fields'}">Все обязательные поля должны быть заполнены.</p>
+        <p th:if="${error == 'password'}">Пароль должен содержать не менее 6 символов.</p>
+        <p th:if="${error == 'emailFormat'}">Неверный формат email.</p>
+    </div>
+    <br>
+    <br>
+    <form action="registration" method="POST">
+        <label for="name">Имя пользователя</label>
+        <input type="text" id="name" name="username" required placeholder="Имя пользователя">
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="example@email.com">
+
+        <label for="full_name">ФИО</label>
+        <input type="text" id="full_name" name="full_name" required placeholder="Иван Иванов">
+
+        <label for="password">Пароль</label>
+        <input type="password" id="password" name="password" required placeholder="********">
+
+        <label for="country">Страна</label>
+        <select id="country" name="country" required>
+            <option value="" disabled selected>Выберите страну</option>
+            <option value="russia">Россия</option>
+            <option value="kazakhstan">Казахстан</option>
+            <option value="belarus">Беларусь</option>
+            <option value="armenia">Армения</option>
+            <option value="azerbaijan">Азербайджан</option>
+            <option value="kyrgyzstan">Кыргызстан</option>
+            <option value="moldova">Молдова</option>
+            <option value="tajikistan">Таджикистан</option>
+            <option value="turkmenistan">Туркменистан</option>
+            <option value="uzbekistan">Узбекистан</option>
+        </select>
+
+        <label for="promoCode">Промо код</label>
+        <input id="promoCode"  name="promoCode" th:value="${promoCode != null ? promoCode : ''}">
+
+        <input type="submit" value="Зарегистрироваться">
+    </form>
+    <p class="small-text">Уже есть аккаунт? <a href="signIn">Войти</a></p>
+    <p class="small-text">Забыли пароль? <a href="forgot-password">Восстановить пароль</a></p>
+</div>
+
+</body>
+</html>

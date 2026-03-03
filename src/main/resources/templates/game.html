@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Катран</title>
+    <link rel="icon" href="/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <style>
+        html, body {
+            width:99%;
+            overflow-x:hidden;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            max-width: 100%; /* Не превышать ширину родительского контейнера */
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+        table {
+            width: 100%;
+            max-width: 100%;
+            margin: 10px auto;
+            border-collapse: separate; /* Разделяем границы ячеек */
+            border-spacing: 0; /* Убираем отступы между ячейками */
+        }
+
+        th, td {
+            border: 1px solid #555; /* Цвет границ между ячейками */
+            padding: 8px;
+            text-align: left;
+            background-color: #222;
+            color: white;
+        }
+        #wheelContainer {
+            position: relative;
+            display: flex;
+            justify-content: center; /* Центрируем по горизонтали */
+            align-items: center; /* Центрируем по вертикали */
+            width: 100%; /* Контейнер занимает всю ширину */
+            height: 100%; /* Контейнер занимает всю высоту */
+        }
+
+        #wheel {
+            position: relative;
+            width: 500px; /* Фиксированный размер колеса на ПК */
+            height: auto; /* Высота автоматически подстраивается */
+            max-width: 100%; /* Максимальная ширина 100% от родительского элемента */
+            z-index: 1;
+            border: 5px solid #333; /* Обрамление колеса */
+            border-radius: 50%; /* Превращение в круг */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Тень для эффекта глубины */
+            background: radial-gradient(circle, #444, #000); /* Градиентный фон */
+        }
+
+        /* Медиазапрос для мобильных устройств */
+        @media screen and (max-width: 768px) {
+            #wheel {
+                transform: scale(0.8); /* Масштабируем колесо на мобильных устройствах */
+                width: 90%; /* Уменьшаем размер колеса для мобильных устройств */
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            table {
+                width: 100%;
+                table-layout: fixed;
+                word-wrap: break-word;
+            }
+            th, td {
+                font-size: 8.5px;
+                padding: 5px;
+                word-wrap: break-word; /* Перенос длинных слов */
+                text-align: center; /* Центрируем текст в ячейках */
+            }
+
+            .navbar a {
+                display: block;
+                margin: 5px auto;
+                font-size: 12px;
+            }
+
+
+            #groupsTable {
+                position: relative;
+                overflow-x: auto;
+                margin: 10px 0;
+                width: 100%;
+                -webkit-overflow-scrolling: touch;
+                top: -60px;
+
+            }
+
+            .join-btn {
+                background-color: #ffd700;
+                color: black;
+                padding: 5px 10px;
+                border: none;
+                cursor: pointer;
+                white-space: normal;
+                word-wrap: break-word; /* Перенос длинных слов */
+                width: 100%; /* Кнопка будет растягиваться по ширине ячейки */
+                box-sizing: border-box; /* Учитываем отступы в общей ширине */
+            }
+
+            .join-btn:hover {
+                background-color: #cca700;
+            }
+        }
+        .join-btn {
+            background-color: #ffd700;
+            color: black;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .join-btn:hover  {
+            background-color: #cca700;
+        }
+
+
+        tr:nth-child(even) {
+            background-color: #333; /* Задаем чередование цветов строк */
+        }
+        th {
+            background-color: #333;
+        }
+
+        .navbar {
+            background-color: #495057;
+            padding: 10px;
+            text-align: center;
+            border-bottom: 2px solid #ffc107;
+        }
+        .navbar a {
+            color: #ffc107;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1rem;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #ff0000;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }  .clickable-row {
+               cursor: pointer; /* Меняет курсор на указатель при наведении */
+               transition: background-color 0.3s; /* Плавный переход фона */
+           }
+
+        .clickable-row:hover {
+            background-color: #f0f0f0; /* Цвет фона при наведении */
+        }
+        .main-container {
+            width: 100%;
+            max-width: 1200px; /* Ограничение максимальной ширины */
+            margin: 0 auto;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .start-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10; /* Поверх канваса */
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .start-button:hover {
+            background-color: #218838;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5); /* Черный фон с прозрачностью */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            text-align: center;
+        }
+
+        #winnerText {
+            color: black;  /* Черный цвет текста */
+            font-size: 24px;  /* Размер текста */
+            font-weight: bold;  /* Жирный шрифт */
+        }
+
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .alert {
+            background-color: #f9c74f;
+            color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 20px;
+        }
+        #newGameButton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            height: 60px;
+            font-size: 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #newGameButton:hover {
+            background-color: darkgreen; /* Более тёмный зелёный при наведении */
+            transform: scale(1.05); /* Лёгкое увеличение размера */
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #495057;
+            color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            width: 90%;
+            max-width: 400px; /* Уменьшаем максимальную ширину */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            text-align: center; /* Центрируем текст и элементы */
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ffc107;
+        }
+
+        .modal-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ffc107;
+        }
+
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Центрируем элементы внутри формы */
+        }
+
+        .modal-content label {
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        .modal-content input[type="number"],
+        .modal-content input[type="text"] {
+            width: 80%; /* Сделаем поля ввода немного уже */
+            padding: 10px;
+            border: 1px solid #6c757d;
+            border-radius: 5px;
+            background-color: #495057;
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-align: center; /* Центрируем текст внутри поля ввода */
+        }
+
+        .modal-content input[type="submit"] {
+            background-color: #ffc107;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1rem;
+            width: 80%; /* Кнопка будет чуть уже */
+        }
+
+        .modal-content input[type="submit"]:hover {
+            background-color: #e0a800;
+        }
+
+        #close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #fff;
+            background-color: transparent;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #close:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        header {
+            position: relative; /* Устанавливаем контейнер в качестве родителя для абсолютного позиционирования */
+            width: 100%; /* Контейнер занимает всю ширину экрана */
+            height: 25vh; /* Высота контейнера — половина экрана */
+            overflow: hidden; /* Скрываем нижнюю часть картинки, выходящую за пределы контейнера */
+        }
+
+        header .header-bg {
+            position: absolute; /* Абсолютное позиционирование относительно header */
+            top: 0;
+            left: 0;
+            width: 100%; /* Картинка растягивается на всю ширину контейнера */
+            height: 100%; /* Картинка заполняет высоту контейнера */
+            background-image: url('/img/new_background.webp'); /* Путь к картинке */ /* Укажите путь к вашей картинке */
+            background-size: cover; /* Масштабируем изображение, чтобы покрыть весь контейнер */
+            background-position: center top; /* Центрируем картинку и фиксируем верх */
+            background-repeat: no-repeat; /* Отключаем повторение картинки */
+        }
+
+        /* Медиазапрос для мобильных устройств */
+        @media (max-width: 768px) {
+            header {
+                height: 25vh; /* Уменьшаем высоту контейнера на мобильных устройствах */
+            }
+        }
+
+
+
+        /*.snowflake {*/
+        /*    position: absolute;*/
+        /*    top: -10px;*/
+        /*    width: 8px;*/
+        /*    height: 8px;*/
+        /*    background-color: white;*/
+        /*    border-radius: 50%;*/
+        /*    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.6);*/
+        /*    opacity: 0.8;*/
+        /*    animation: snowfall 10s linear infinite;*/
+        /*}*/
+
+        /*@keyframes snowfall {*/
+        /*    0% {*/
+        /*        transform: translateX(0);*/
+        /*        top: -10px;*/
+        /*    }*/
+        /*    100% {*/
+        /*        transform: translateX(100px);*/
+        /*        top: 100vh;*/
+        /*    }*/
+        /*}*/
+
+
+        /*.snowflake:nth-child(odd) {*/
+        /*    animation-duration: 12s;*/
+        /*    animation-delay: -2s;*/
+        /*}*/
+
+        /*.snowflake:nth-child(even) {*/
+        /*    animation-duration: 10s;*/
+        /*    animation-delay: -1s;*/
+        /*}*/
+
+        /* Основной контейнер для фильтров и кнопок */
+        .filter-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            justify-content: flex-start; /* Сначала фильтрация, потом кнопки */
+        }
+
+        /* Кнопки в меню */
+        .menu-container {
+            position: relative;
+            margin-left: 20px;
+            left: 160px;
+        }
+        .game-container {
+            position: relative;
+            margin-left: 20px;
+            top: 50px;
+        }
+
+        .menu-button {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            height: 50px;
+            min-width: 150px;
+        }
+        .tables-button{
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            height: 50px;
+            min-width: 150px;
+        }
+
+        /* Стрелка */
+        .arrow {
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        /* Контейнер полей фильтрации */
+        .filter-options {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: #000000;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            width: 100%; /* Заполняет всю ширину на мобильных устройствах */
+            left: 160px;
+        }
+
+        /* Поля ввода */
+        .filter-options input {
+            width: 250px; /* Стандартная ширина */
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #e0a800;
+            background-color: #333;
+            color: white;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        /* Изменение цвета фона при фокусировке */
+        .filter-options input:focus {
+            background-color: #444;
+        }
+
+        /* Кнопки Применить и Сбросить */
+        .filter-options button {
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #e0a800;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Кнопка "Сбросить" */
+        .filter-options button:nth-child(2) {
+            background-color: #e0a800;
+        }
+
+        /* Стиль при наведении на кнопки */
+        .filter-options button:hover {
+            background-color: #e0a800;
+        }
+
+        @media (max-width: 768px) {
+            .filter-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center; /* Центрируем элементы */
+                width: 100%;
+                position: relative;
+                left: 10px;
+            }
+
+            .game-container {
+                flex-direction: column;
+                align-items: center;
+                width: 100%; /* Делаем контейнер адаптивным */
+            }
+
+            .menu-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between; /* Равномерное распределение кнопок */
+                gap: 15px;
+                width: 100%;
+            }
+
+            .menu-button, .tables-button {
+                position: relative;
+                top: -50px;
+                width: auto; /* Ширина будет зависеть от содержимого */
+                max-width: 100%; /* Ограничиваем максимальную ширину */
+                padding: 8px 15px;
+            }
+
+
+            .filter-options {
+                display: flex;
+                position: relative;
+                top: -50px;
+                left: -5px;
+                flex-direction: column;
+                align-items: stretch; /* Растягиваем элементы на всю ширину */
+                gap: 10px; /* Добавляем расстояние между элементами */
+                padding: 10px;
+                width: auto;
+            }
+
+            .filter-options input {
+                font-size: 14px;
+                padding: 10px;
+                width: auto; /* Растягиваем на всю ширину */
+            }
+
+            .filter-options button {
+                font-size: 14px;
+                padding: 10px 20px;
+                width: 100%; /* Растягиваем на всю ширину */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .menu-button, .tables-button {
+                position: relative;
+                top: -50px;
+                font-size: 12px;
+                padding: 8px 15px;
+                width: auto; /* Растягиваем кнопки для узких экранов */
+            }
+
+            .filter-options input,
+            .filter-options button {
+                font-size: 12px;
+                padding: 8px 15px;
+            }
+        }
+
+
+        .group-created-by-user {
+            background-color: #007BFF; /* Синий фон */
+            color: white; /* Белый текст */
+            animation: pulse 2s infinite; /* Анимация для "горения" */
+        }
+
+        /* Анимация для пульсации (эффект горения) */
+        @keyframes pulse {
+            0% {
+                background-color: #007BFF;
+                box-shadow: 0 0 10px 0px rgba(0, 123, 255, 0.8);
+            }
+            50% {
+                background-color: #0056b3;
+                box-shadow: 0 0 20px 5px rgba(0, 123, 255, 0.8);
+            }
+            100% {
+                background-color: #007BFF;
+                box-shadow: 0 0 10px 0px rgba(0, 123, 255, 0.8);
+            }
+        }
+        .stats-item {
+            position: relative;
+            left: -740px;
+            top: -5px;
+            font-family: 'Arial', sans-serif;
+        }
+        .stats-item h3 {
+            font-size: 18px;
+            color: #9c9c9c;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .stats-item p {
+            font-size: 12px;
+            color: #939393;
+            text-align: center;
+            margin: 0;
+        }
+        .stats-item p span {
+            font-weight: bold;
+            color: #ff9900;
+            font-size: 18px;
+        }
+        @media (max-width: 780px) {
+            .stats-item {
+                position: relative;
+                left: 0;
+                top: -20px;
+                padding: 10px;
+                font-family: 'Arial', sans-serif;
+            }
+            .stats-item h3 {
+                font-size: 16px;
+                margin-bottom: 8px;
+                text-align: center;
+            }
+            .stats-item p {
+                font-size: 14px;
+                text-align: center;
+                margin: 5px 0;
+            }
+            .stats-item p span {
+                font-size: 16px;
+                color: #ff9900;
+            }
+        }
+
+
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/winwheel@1.0.1/dist/Winwheel.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+
+    <script src="/js/roulette.js"></script>
+</head>
+<body>
+<header>
+    <div class="snowflake"></div>
+    <div class="snowflake"></div>
+    <div class="snowflake"></div>
+    <div class="header-bg"></div>
+    <h1>Катран</h1>
+    <p>Присоединяйтесь к игре и испытайте удачу!</p>
+</header>
+<div class="navbar">
+    <a href="mainIndex">Домой</a>
+    <a href="profile">Мой профиль</a>
+    <a href="chat">Чат/Обсуждение/Вопросы</a>
+    <a href="help">Помощь</a>
+</div>
+<div class="alert alert-warning" role="alert">
+    Минимальная сумма для участия в игре: <strong>40$</strong>!
+</div>
+<button id="newGameButton" >Новая игра</button>
+
+<div class="stats-item">
+    <h3>Ваш счет</h3>
+    <p><span id="userAmount" th:text="${user != null ? user.amount : 0}"></span> $</p>
+</div>
+
+<!-- Кнопка "Игры" -->
+<div class="game-container">
+    <button id="gamesButton" class="tables-button" onclick="toggleGames()">
+        Игры <span id="gamesArrow" class="arrow">&#9660;</span> <!-- Стрелка вниз -->
+    </button>
+</div>
+
+
+<div class="filter-container">
+    <div class="menu-container">
+        <button id="filterButton" class="menu-button">
+            Фильтр
+            <span id="filterArrow" class="menu-icon">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+        </span>
+        </button>
+    </div>
+    <div id="filterOptions" class="filter-options" style="display: none;">
+        <div>
+            <input type="number" id="filterSizeInput" placeholder="Количество игроков">
+            <input type="number" id="filterAmountFrom" placeholder="Сумма ставок от">
+            <input type="number" id="filterAmountTo" placeholder="Сумма ставок до">
+        </div>
+        <div>
+            <button onclick="applyFilter()">Применить</button>
+            <button onclick="resetFilter()">Сбросить</button>
+        </div>
+    </div>
+</div>
+
+
+<div id="gamesTableContainer" style="margin-top: 20px;">
+    <table id="groupsTable">
+        <thead>
+        <tr class="clickable-row" onclick="handleClick()">
+            <th>№</th>
+            <th>ID Группы</th>
+            <th>Игроки</th>
+            <th>Максимальное количество игроков</th>
+            <th>Максимальная сумма ставок</th>
+            <th>Игра Начата</th>
+            <th>Действие</th>
+            <th style="display: none;">ID Создателя</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<main class="main-container">
+    <div th:if="${user != null}" style="display: none;">
+        <span th:text="${user.id}" id="userId"></span>
+        <span th:text="${user.username}" id="userName"></span>
+    </div>
+    <div id="message"></div> <!-- Сообщение о группах -->
+    <div id="groupList"></div>
+
+    <div id="wheelContainer">
+        <canvas id="wheel" width="500" height="500"></canvas>
+    </div>
+
+    <div id="winnerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="winnerText"></p>
+        </div>
+    </div>
+
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span id="close">&times;</span>
+            <h2>Создать новую игру</h2>
+            <form id="gameForm" method="post">
+                <label for="maxPlayerCount">Количество мест для игроков:</label>
+                <input type="number" id="maxPlayerCount" name="maxPlayerCount" min="2" max="10" required placeholder="Введите количество мест">
+
+                <label for="maxAmount">Сумма ставки:</label>
+                <input type="number" id="maxAmount" name="maxAmount" min="1" required placeholder="Введите сумму ставки">
+
+                <input type="submit" value="Создать игру">
+            </form>
+        </div>
+    </div>
+
+</main>
+
+<footer>
+    © 2024 Все права защищены.
+</footer>
+</body>
+
+<script>
+
+    // for (let i = 0; i < 50; i++) {
+    //     let snowflake = document.createElement('div');
+    //     snowflake.classList.add('snowflake');
+    //     snowflake.style.left = `${Math.random() * 100}%`;
+    //     snowflake.style.width = `${Math.random() * 10 + 5}px`;
+    //     snowflake.style.height = snowflake.style.width;
+    //     snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`;
+    //     snowflake.style.animationDelay = `${Math.random() * 5}s`;
+    //     snowflake.style.opacity = `${Math.random() * 0.5 + 0.5}`;
+    //     document.body.appendChild(snowflake);
+    // }
+    // Функция для переключения отображения меню "Игры"
+    function toggleGroupsTable(show) {
+        const gamesTableContainer = document.getElementById("gamesTableContainer");
+        const gamesArrow = document.getElementById("gamesArrow");
+
+        if (show) {
+            gamesTableContainer.style.display = "block";  // Показываем таблицу
+            gamesArrow.innerHTML = "&#9660;";  // Стрелка вниз
+        } else {
+            gamesTableContainer.style.display = "none";  // Скрываем таблицу
+            gamesArrow.innerHTML = "&#9650;";  // Стрелка вверх
+        }
+
+        // Восстанавливаем видимость всех строк при показе таблицы
+        if (show) {
+            const allRows = document.querySelectorAll('#groupsTable tbody tr');
+            allRows.forEach((row) => {
+                row.style.display = 'table-row';  // Восстанавливаем видимость всех строк
+            });
+        }
+    }
+
+
+    // Функция для переключения отображения фильтров
+    let filterTimeout; // Переменная для хранения таймера
+
+    function toggleFilter() {
+        var filterOptions = document.getElementById("filterOptions");
+        filterOptions.style.display = (filterOptions.style.display === "none" || filterOptions.style.display === "") ? "flex" : "none";
+
+        const filterArrow = document.getElementById("filterArrow");
+        if (filterOptions.style.display === "flex") {
+            filterArrow.innerHTML = "&#9776;";
+            clearTimeout(filterTimeout);
+            filterTimeout = setTimeout(() => {
+                filterOptions.style.display = 'none';
+                filterArrow.innerHTML = "&#9776;";
+            }, 9000);
+        } else {
+            filterArrow.innerHTML = "&#9776;";
+            clearTimeout(filterTimeout);
+        }
+    }
+
+    document.getElementById('filterButton').addEventListener('click', toggleFilter);
+    function resetFilterTimeout() {
+        clearTimeout(filterTimeout);
+        filterTimeout = setTimeout(() => {
+            document.getElementById("filterOptions").style.display = 'none';
+            document.getElementById("filterArrow").innerHTML = "&#9776;";
+        }, 6000);
+    }
+
+    document.getElementById('filterSizeInput').addEventListener('input', resetFilterTimeout);
+    document.getElementById('filterAmountFrom').addEventListener('input', resetFilterTimeout);
+    document.getElementById('filterAmountTo').addEventListener('input', resetFilterTimeout);
+    document.getElementById('filterSizeInput').addEventListener('blur', resetFilterTimeout);
+    document.getElementById('filterAmountFrom').addEventListener('blur', resetFilterTimeout);
+    document.getElementById('filterAmountTo').addEventListener('blur', resetFilterTimeout);
+    function applyFilter() {
+        const sizeInput = document.getElementById('filterSizeInput').value;
+        const amountFrom = document.getElementById('filterAmountFrom').value;
+        const amountTo = document.getElementById('filterAmountTo').value;
+        if (!sizeInput && !amountFrom && !amountTo) {
+            alert("Пожалуйста, введите хотя бы одно значение для фильтра.");
+            return;
+        }
+
+        filterTable(sizeInput, amountFrom, amountTo);
+    }
+
+    // Фильтрация таблицы
+    function filterTable(sizeInput, amountFrom, amountTo) {
+        const table = document.getElementById('groupsTable');
+        const rows = Array.from(table.rows).slice(1); // Пропускаем заголовок
+
+        rows.forEach(row => {
+            const sizeA = parseInt(row.cells[3].innerText.trim());
+            const amountA = parseInt(row.cells[4].innerText.trim());
+
+            // Фильтрация по точному совпадению
+            const sizeMatch = sizeInput ? sizeA === parseInt(sizeInput) : true;
+            const amountMatch = (amountFrom ? amountA >= parseInt(amountFrom) : true) && (amountTo ? amountA <= parseInt(amountTo) : true);
+
+            if (sizeMatch && amountMatch) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    // Сбросить фильтры
+    function resetFilter() {
+        document.getElementById('filterSizeInput').value = '';
+        document.getElementById('filterAmountFrom').value = '';
+        document.getElementById('filterAmountTo').value = '';
+
+        // Восстановление всех строк в таблице
+        const table = document.getElementById('groupsTable');
+        const rows = Array.from(table.rows).slice(1);  // Убираем заголовок таблицы
+
+        rows.forEach(row => {
+            row.style.display = '';  // Показываем все строки
+        });
+    }
+
+
+
+    let groups = [];
+
+    function fetchGroups() {
+        fetch('/game/groups')
+            .then(response => response.json())
+            .then(data => {
+                groups = data;
+                populateTable();
+                // Проверка, есть ли группы
+                if (groups.length === 0) {
+                    createGroup(); // Создаем новую группу, если групп нет
+                }
+            })
+            .catch(error => console.error('Ошибка:', error));
+    }
+
+    let names;
+    let rotationAngle = 0;
+    const groupsState = {}; // Хранит состояние всех групп
+
+    function initializeGroup(groupId, players,segmentSize) {
+        groupsState[groupId] = {
+            names: players,
+            segmentSize: segmentSize,
+            isSpinning: false  // Обратите внимание, что мы добавляем isSpinning
+        };
+    }
+
+    function drawWheel(names, segmentSize, rotationAngle = 0, highlightedSegmentIndex = null, pulse = 0) {
+        const canvas = document.getElementById('wheel');
+        const ctx = canvas.getContext('2d');
+
+        const numSegments = segmentSize || names.length; // Если segmentSize передан, используем его, иначе длину массива имен
+        const angle = (2 * Math.PI) / numSegments; // Угол для каждого сегмента
+        const maxPulse = 10; // Максимальный размер пульсации
+
+        // Очищаем канвас перед каждым новым рисованием
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Проверяем, есть ли данные о игроках
+        if (!names || names.length === 0) {
+            console.error("game:916 Получены пустые данные игроков из сервера");
+
+            // Если данных нет, рисуем колесо только с текстом "Ожидание игрока"
+            for (let i = 0; i < numSegments; i++) {
+                const startAngle = i * angle + rotationAngle;
+                const endAngle = (i + 1) * angle + rotationAngle;
+
+                // Вычисляем радиус сегмента с учетом пульсации
+                const radius = 200 + (i === highlightedSegmentIndex ? Math.sin(pulse) * maxPulse : 0);
+
+                // Рисуем сегмент
+                ctx.beginPath();
+                ctx.moveTo(canvas.width / 2, canvas.height / 2); // Центр колеса
+                ctx.arc(canvas.width / 2, canvas.height / 2, radius, startAngle, endAngle);
+
+                // Цвет сегмента с чередующимися цветами
+                ctx.fillStyle = i % 2 === 0 ? '#ffcc00' : '#ff5733'; // Чередующиеся цвета
+                if (i === highlightedSegmentIndex) {
+                    ctx.shadowBlur = 30 + Math.abs(Math.sin(pulse) * 20); // Динамическое свечение
+                    ctx.shadowColor = '#00ff00'; // Цвет свечения
+                } else {
+                    ctx.shadowBlur = 0; // Убираем свечение для остальных
+                }
+                ctx.strokeStyle = '#000'; // Четкая граница сегментов
+                ctx.lineWidth = 2; // Толщина границ
+
+                ctx.fill();
+                ctx.stroke();
+
+                // Добавляем текст "Ожидание игрока" в сегмент
+                ctx.save();
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate(startAngle + angle / 2); // Вращаем текст вместе с сегментом
+
+                const text = 'Ожидание игрока'; // Заглушка для пустых данных
+
+                // Настройка текста
+                ctx.fillStyle = '#fff'; // Белый текст
+                ctx.font = 'bold 18px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.strokeStyle = '#000'; // Обводка текста
+                ctx.lineWidth = 1;
+
+                // Рисуем текст
+                ctx.strokeText(text, radius - 50, 0); // Обводка текста
+                ctx.fillText(text, radius - 50, 0); // Текст
+                ctx.restore();
+            }
+        } else {
+            // Если имена игроков есть, рисуем колесо с ними
+            for (let i = 0; i < numSegments; i++) {
+                const startAngle = i * angle + rotationAngle;
+                const endAngle = (i + 1) * angle + rotationAngle;
+
+                // Вычисляем радиус сегмента с учетом пульсации
+                const radius = 200 + (i === highlightedSegmentIndex ? Math.sin(pulse) * maxPulse : 0);
+
+                // Рисуем сегмент
+                ctx.beginPath();
+                ctx.moveTo(canvas.width / 2, canvas.height / 2); // Центр колеса
+                ctx.arc(canvas.width / 2, canvas.height / 2, radius, startAngle, endAngle);
+
+                // Цвет сегмента с чередующимися цветами
+                ctx.fillStyle = i % 2 === 0 ? '#ffcc00' : '#ff5733'; // Чередующиеся цвета
+                if (i === highlightedSegmentIndex) {
+                    ctx.shadowBlur = 30 + Math.abs(Math.sin(pulse) * 20); // Динамическое свечение
+                    ctx.shadowColor = '#00ff00'; // Цвет свечения
+                } else {
+                    ctx.shadowBlur = 0; // Убираем свечение для остальных
+                }
+                ctx.strokeStyle = '#000'; // Четкая граница сегментов
+                ctx.lineWidth = 2; // Толщина границ
+
+                ctx.fill();
+                ctx.stroke();
+
+                // Добавляем имя в сегмент
+                ctx.save();
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate(startAngle + angle / 2); // Вращаем текст вместе с сегментом
+
+                // Проверяем имя игрока или задаем заглушку
+                const text = names[i] || 'Ожидание игрока'; // Если имя игрока есть, используем его, иначе заглушка
+
+                // Настройка текста
+                ctx.fillStyle = '#fff'; // Белый текст
+                ctx.font = 'bold 18px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.strokeStyle = '#000'; // Обводка текста
+                ctx.lineWidth = 1;
+
+                // Рисуем текст
+                ctx.strokeText(text, radius - 50, 0); // Обводка текста
+                ctx.fillText(text, radius - 50, 0); // Текст
+                ctx.restore();
+            }
+        }
+    }
+
+    let currentGroupId = null; // Инициализация переменной для текущей группы
+    let isGameActive = false; // Новый флаг для отслеживания состояния игры
+
+    // Функция для обновления текущей группы
+    function setCurrentGroup(groupId) {
+        currentGroupId = groupId; // Обновляем переменную с текущей группой
+    }
+
+    function spinWheel(groupId) {
+        if (isGameActive) return; // Если игра активна, не разрешаем запуск другой игры
+
+        isGameActive = true; // Игра началась
+
+        const group = groupsState[groupId];
+        if (!group) return;
+
+        const userName = document.getElementById('userName').textContent;
+
+        // Проверяем, если пользователь является участником игры
+        if (!group.names.includes(userName)) {
+            console.log("Вы не участник игры. Невозможно запустить вращение.");
+            isGameActive = false;
+            return;
+        }
+
+        // Блокировать клики только для участников
+        document.body.style.pointerEvents = 'none';
+        document.body.style.opacity = '0.5';
+
+        const spinDuration = Math.random() * (10000 - 5000) + 5000;
+        const startTime = performance.now();
+        const numSegments = group.segmentSize || group.names.length;
+
+        function animate(currentTimestamp) {
+            const elapsed = currentTimestamp - startTime;
+            const progress = Math.min(elapsed / spinDuration, 1);
+            const easeOutProgress = Math.sin((progress * Math.PI) / 2);
+            rotationAngle = easeOutProgress * (2 * Math.PI * 3);
+            drawWheel(group.names, group.segmentSize, rotationAngle);
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                group.isSpinning = false; // Сбрасываем состояние вращения
+
+                // Разблокировать клики после окончания вращения
+                document.body.style.pointerEvents = 'auto';
+                document.body.style.opacity = '1';
+
+                socket.send(`getWinner:${groupId}`);
+                isGameActive = false; // Игра закончена
+            }
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+
+
+
+    // Анимация выделения выигрышного сегмента
+    function animateWinningSegment(winningIndex, groupId) {
+        const group = groupsState[groupId]; // Получаем данные текущей группы
+        if (!group) return; // Если группы нет, прекращаем выполнение
+
+        const userName = document.getElementById('userName').textContent; // Имя текущего пользователя
+
+        // Проверка, является ли пользователь участником игры
+        if (!group.names.includes(userName)) {
+            console.log("Вы не участник игры. Невозможно запустить анимацию.");
+            return; // Если пользователь не участник, выходим из функции
+        }
+
+        const duration = 2000; // Длительность анимации в миллисекундах
+        const pulseSpeed = 0.1; // Скорость пульсации
+        const maxPulseCycles = 10; // Количество циклов пульсации
+
+        let pulse = 0; // Начальное значение пульсации
+        const startTime = performance.now(); // Время начала анимации
+
+        function pulseAnimation(currentTime) {
+            const elapsed = currentTime - startTime; // Сколько времени прошло
+            const progress = Math.min(elapsed / duration, 1); // Прогресс анимации (от 0 до 1)
+
+            // Увеличиваем значение пульсации
+            pulse += pulseSpeed;
+
+            // Рисуем колесо с учетом текущей пульсации
+            drawWheel(
+                group.names, // Имена участников
+                group.segmentSize, // Размеры сегментов
+                16, // Параметр вашей анимации (можно изменить)
+                winningIndex, // Индекс победителя
+                progress * Math.PI * 2 + pulse // Анимация вращения и пульсация
+            );
+
+            // Условие продолжения анимации
+            if (progress < 1 || pulse / (2 * Math.PI) < maxPulseCycles) {
+                requestAnimationFrame(pulseAnimation); // Продолжаем анимацию
+            }
+        }
+
+        // Запуск анимации
+        requestAnimationFrame(pulseAnimation);
+    }
+
+    function displayWinner(winningName, groupId, totalWinAmount) {
+        console.log('Передано totalWinAmount:', totalWinAmount); // Логирование для проверки
+
+        // Находим группу по ID
+        const group = groupsState[groupId];
+        if (!group) {
+            console.error("Группа не найдена");
+            return;
+        }
+
+        // Получаем имя текущего пользователя
+        const userName = document.getElementById('userName').textContent;
+
+        // Если пользователь не является участником, показывать уведомление не нужно
+        if (!group.names.includes(userName)) {
+            console.log("Вы не участник игры. Уведомление о победителе не будет показано.");
+            return;
+        }
+        const modal = document.getElementById('winnerModal');
+        const winnerText = document.getElementById('winnerText');
+        winnerText.innerHTML = `Победитель: ${winningName}<br>Общая сумма выигрыша: ${totalWinAmount !== undefined && totalWinAmount !== null ? totalWinAmount : 'неизвестно'}`;
+        modal.style.display = 'block';
+
+
+        fetch('game/saveGameWinner', {
+            method: 'POST',
+            body: JSON.stringify({
+                winnerName: winningName,
+                totalWinAmount: totalWinAmount
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ошибка при сохранении победителя');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Победитель успешно сохранен:', data);
+            })
+            .catch(error => {
+                console.error('Ошибка при сохранении победителя:', error);
+                alert('Не удалось сохранить данные о победителе.');
+            });
+
+        // Закрытие окна при клике на кнопку "Закрыть"
+        const closeButton = document.getElementsByClassName('close')[0];
+        closeButton.onclick = function() {
+            modal.style.display = 'none';
+        };
+
+        // Закрытие окна при клике за пределами окна
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+    }
+
+
+    function updateAmount() {
+        $.ajax({
+            url: '/getAmount',  // URL для запроса
+            method: 'GET',
+            success: function(response) {
+                $('#userAmount').text(response.amount); // Обновление счета
+            }
+        });
+    }
+
+    // Обновлять счет каждые 5 секунд
+    setInterval(updateAmount, 5000);
+
+    const style = document.createElement('style');
+    style.innerHTML = `
+                      #result {
+                        display: none;
+                        font-size: 30px;
+                        font-weight: bold;
+                        color: #00ff00;
+                        text-align: center;
+                        margin-top: 20px;
+                      }
+
+                      .blink {
+                        animation: blink-animation 1s steps(5, start) infinite;
+                      }
+
+                      @keyframes blink-animation {
+                        to {
+                          visibility: hidden;
+                        }
+                      }
+                    `;
+    document.head.appendChild(style);
+    let i = 0;
+    const userId = document.getElementById('userId').textContent;
+    const userName = document.getElementById('userName').textContent;
+
+    function populateTable() {
+        const tableBody = document.getElementById('groupsTable').getElementsByTagName('tbody')[0];
+        tableBody.innerHTML = '';
+        groups.forEach((group, index) => {
+            const row = tableBody.insertRow();
+            row.className = 'clickable-row';
+            const playerNames = group.players.map(player => player.name);
+            initializeGroup(group.id, playerNames, group.size);
+            const isCreator = String(group.createUserId) === String(userId);
+            if (isCreator) {
+                row.classList.add('group-created-by-user');
+            }
+            row.innerHTML = `
+            <td>${index}</td>
+            <td>${group.id}</td>
+            <td>${group.players.length}</td>
+            <td>${group.size}</td>
+            <td>${group.amount}</td>
+            <td>${group.gameStarted ? 'Да' : 'Нет'}</td>
+            <td>
+           <button class="join-btn" id="joinButton-${group.id}" onclick="joinGroupAndStopPropagation(event, '${group.id}', this.closest('tr'))">
+               Go!
+           </button>
+           </td>
+            <td style="display: none;">
+                <button id="startButton-${group.id}" class="start-button" onclick="startWheel('${group.id}')">
+                    старт
+                </button>
+            </td>
+            <td style="display: none;">${group.createUserId}</td>
+        `;
+
+            const startButton = document.getElementById(`startButton-${group.id}`);
+            const joinButton = document.getElementById(`joinButton-${group.id}`);
+            if (group.players.length >= group.size) {
+                joinButton.style.display = 'none';
+            }
+            if (isCreator) {
+                joinButton.style.display = 'none';
+                startButton.style.display = (group.players.length >= group.size) ? 'block' : 'none';
+            } else {
+                joinButton.style.display = (group.players.length < group.size) ? 'block' : 'none';
+                startButton.style.display = 'none';
+            }
+
+            const wheelContainer = document.getElementById("wheelContainer");
+            if (startButton && wheelContainer && isCreator) {
+                wheelContainer.appendChild(startButton);
+            }
+
+            row.onclick = () => {
+                const groupId = group.id;
+                if (isGameActive) return;
+
+                handleRowClick(groupId, row);
+
+                if (isCreator) {
+                    startButton.style.display = 'block';
+                } else {
+                    startButton.style.display = 'none';
+                }
+
+                if (!isCreator && group.players.length < group.size) {
+                    joinGroupAsViewer(groupId, row);
+                    joinButton.style.display = 'block';
+                    row.classList.add('joined');
+                }
+
+                if (groupsState[groupId]) {
+                    handleGroupState(groupId);
+                } else {
+                    if (!groupsState[groupId] || !groupsState[groupId].names || groupsState[groupId].names.length === 0) {
+                        console.warn(`Группа ${groupId} не найдена или имеет пустые имена. Попытка загрузки данных...`);
+                        fetchGroupData(groupId);
+                        return;
+                    }
+                }
+            };
+            function joinGroupAsViewer(groupId, row) {
+                console.log(`Игрок с ID ${userId} присоединился в группу ${groupId} как зритель`);
+                row.classList.add('viewer');
+            }
+        });
+    }
+
+    function joinGroupAndStopPropagation(event, groupId, row) {
+        event.stopPropagation();
+        console.log('Кнопка Go была нажата для группы с ID:', groupId);
+        joinGroup(groupId, row);
+        row.classList.add('joined');
+        toggleGroupsTable(false);
+        const allRows = document.querySelectorAll('#groupsTable tbody tr');
+        allRows.forEach((otherRow) => {
+            if (otherRow !== row) {
+                otherRow.style.display = 'none';
+            }
+        });
+    }
+
+
+    function handleRowClick(groupId, row) {
+        console.log('Строка была кликнута для группы с ID:', groupId);
+        const allRows = document.querySelectorAll('#groupsTable tbody tr');
+        allRows.forEach((otherRow) => {
+            if (otherRow !== row) {
+                otherRow.style.display = 'none';
+            }
+        });
+    }
+
+
+    function toggleGames() {
+        const gamesTableContainer = document.getElementById("gamesTableContainer");
+        if (gamesTableContainer.style.display === "none" || gamesTableContainer.style.display === "") {
+            toggleGroupsTable(true);
+        } else {
+            toggleGroupsTable(false);
+        }
+    }
+
+    function createGroup() {
+        fetch('/game/createGroup', {
+            method: 'POST'
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+            })
+            .then(newGroup => {
+                groups.push(newGroup); // Добавляем новую группу в массив
+                populateTable(); // Обновляем таблицу
+                console.log('Создана новая группа:', newGroup);
+            })
+            .catch(error => console.error('Ошибка при создании группы:', error));
+    }
+
+    document.getElementById("newGameButton").addEventListener("click", function () {
+        const modal = document.getElementById("modal");
+        modal.style.display = "flex";
+    });
+
+    document.getElementById("close").addEventListener("click", function () {
+        const modal = document.getElementById("modal");
+        modal.style.display = "none";
+    });
+
+    window.addEventListener("click", function (event) {
+        const modal = document.getElementById("modal");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+    document.getElementById("gameForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Предотвращает отправку формы
+        const formData = new URLSearchParams(new FormData(this)); // Собираем данные формы
+
+        fetch("/game/newGame", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: formData,
+        })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url; // Обрабатываем редирект
+                } else {
+                    return response.json(); // Преобразуем ответ в JSON
+                }
+            })
+            .then(data => {
+                if (Array.isArray(data)) { // Проверяем, является ли ответ массивом
+                    groups = data; // Обновляем переменную групп
+                    populateTable(); // Обновляем таблицу
+                    const modal = document.getElementById("modal");
+                    modal.style.display = "none";
+                } else {
+                    // Обработка ошибок, если ответ не массив
+                    if (data.status === "5") {
+                        alert('Пользователь не найден. Пожалуйста, авторизуйтесь заново.');
+                    } else if (data.status === "6") {
+                        alert('Недостаточно средств на балансе. Пополните баланс и попробуйте снова.');
+                    } else {
+                        alert('Неизвестная ошибка. Попробуйте еще раз.');
+                    }
+                    modal.style.display = "none";
+                }
+            })
+            .catch(error => console.error("Ошибка:", error));
+    });
+
+    window.onload = fetchGroups;
+
+    document.addEventListener('DOMContentLoaded', populateTable);
+
+    // Функция обработки состояния группы
+    function handleGroupState(groupId) {
+        const group = groupsState[groupId];
+        console.log("Group State:", JSON.stringify(groupsState[groupId]));
+        if (group.isSpinning) {
+            spinWheel(groupId); // Если колесо уже крутится
+        } else {
+            drawWheel(group.names,groupsState[groupId].segmentSize); // Если колесо еще не крутится
+        }
+        updateButtonsVisibility(groupId, null,group.names);
+    }
+
+    // Функция загрузки данных о группе с сервера
+    function fetchGroupData(groupId) {
+        console.log("fetchGroupData:"+groupId);
+        fetch(`game/group/${groupId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Ошибка загрузки группы: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data.players || data.players.length === 0) {
+                    console.error("Получены пустые данные игроков из сервера");
+                    //return;
+                }
+                const playerNames = data.players.map(player => player.name);
+                initializeGroup(groupId, playerNames,data.size);
+                updateButtonsVisibility(groupId, data);
+                drawWheel(playerNames,data.size);
+            })
+
+            .catch(error => console.error('Ошибка загрузки данных группы:', error));
+    }
+    function updateUserAmount() {
+        fetch('/getUserAmount')
+            .then(response => response.json())
+            .then(data => {
+                // Обновляем текст на странице
+                const userAmountElement = document.getElementById('userAmount');
+                userAmountElement.textContent = data.amount;
+            })
+            .catch(error => {
+                console.error('Ошибка при получении счета:', error);
+            });
+    }
+    setInterval(updateUserAmount, 600);
+
+    // Обновление кнопок видимости
+    function updateButtonsVisibility(groupId, groupData, players) {
+        const allStartButtons = document.querySelectorAll('.start-button');
+        allStartButtons.forEach(button => button.style.display = 'none');
+
+        const startButton = document.getElementById(`startButton-${groupId}`);
+        if (startButton) {
+            const actualPlayers = players || (groupData && groupData.players) || [];
+            const groupSize = groupData ? groupData.size : actualPlayers.length;
+            const createUserId = groupData ? groupData.createUserId : userId;
+            if (!groupSize || actualPlayers.length === 0) {
+                startButton.style.display = 'none';
+                console.log('Button hidden due to missing size or players.');
+            } else {
+                startButton.style.display = (
+                    String(createUserId) === String(userId) &&
+                    actualPlayers.length >= groupSize
+                ) ? 'block' : 'none';
+                console.log(
+                    'Button visibility:',
+                    startButton.style.display,
+                    'Conditions:',
+                    {
+                        createUserMatch: String(createUserId) === String(userId),
+                        playerCountMatch: actualPlayers.length >= groupSize,
+                    }
+                );
+            }
+        } else {
+            console.warn(`Start button for groupId ${groupId} not found.`);
+        }
+    }
+
+
+
+
+
+    function updatePlayerList(groupId, players) {
+        const tableBody = document.getElementById('groupsTable').getElementsByTagName('tbody')[0];
+
+        // Ищем строку с группой по её ID
+        const groupRow = Array.from(tableBody.rows).find(row => {
+            const groupIdCell = row.cells[1]; // Индекс ячейки с groupId (в данном случае 1)
+            return groupIdCell && groupIdCell.textContent === groupId;
+        });
+
+        if (groupRow) {
+            // Получаем ячейку с игроками (требуется определить её индекс)
+            const playerCell = groupRow.cells[2]; // Индекс ячейки с количеством игроков (в данном случае 2)
+
+            if (playerCell) {
+                // Обновляем текст в ячейке с новым количеством игроков
+                playerCell.textContent = players.length;
+            }
+
+            // Также можем обновить список имен игроков в скрытой области или в подсказке
+            const tooltipCell = groupRow.cells[6]; // Предположим, индекс 6 для скрытой информации об игроках
+            if (tooltipCell) {
+                tooltipCell.textContent = players.join(', '); // Например, отображаем всех игроков через запятую
+            }
+            updateButtonsVisibility(groupId, null,players);
+        }
+    }
+
+
+
+    // WebSocket подключение
+    const socket = new WebSocket("wss://localhost/wheel");
+
+    socket.onopen = () => {
+        console.log("Connected to WebSocket server");
+    };
+
+    socket.onmessage = (event) => {
+        const message = event.data;
+        const parts = message.split(':');
+        let groupId;
+        let participants;
+
+        if (parts.length < 2) {
+            console.error("Некорректное сообщение WebSocket: слишком мало данных", message);
+            return;
+        }
+
+        switch (parts[0]) {
+            case "wheelStart":
+                groupId = parts[1];
+                try {
+                    participants = JSON.parse(parts.slice(2).join(':')); // Разбираем JSON
+                    handleWheelStart(groupId, participants);
+                } catch (e) {
+                    console.error("Ошибка при разборе участников для wheelStart:", e);
+                }
+                break;
+
+            case "winner":
+                if (parts.length < 5) { // Теперь ожидаем хотя бы 5 частей: groupId, winnerIndex, totalWinAmount, participants
+                    console.error("Недостаточно данных для обработки сообщения winner:", message);
+                    return;
+                }
+
+                groupId = parts[1];
+                const winnerIndex = parseInt(parts[2], 10);
+                const totalWinAmount = parseFloat(parts[3]); // Преобразуем totalWinAmount в число (float)
+
+                // Проверяем, что totalWinAmount валиден
+                if (isNaN(totalWinAmount)) {
+                    console.error("Невалидная сумма выигрыша:", parts[3]);
+                    return;
+                }
+
+                try {
+                    participants = JSON.parse(parts.slice(4).join(':')); // Парсим участников
+                    const winnerName = participants[winnerIndex];
+                    displayWinner(winnerName, groupId, totalWinAmount); // Отображаем победителя и сумму выигрыша
+                } catch (e) {
+                    console.error("Ошибка при разборе участников для winner:", e);
+                }
+                break;
+
+            case "playerUpdate":
+                if (parts.length < 3) {
+                    console.error("Недостаточно данных для обработки сообщения playerUpdate:", message);
+                    return;
+                }
+
+                groupId = parts[1];
+                try {
+                    participants = JSON.parse(parts.slice(2).join(':')); // Парсим JSON участников
+                    if (groupsState[groupId]) {
+                        groupsState[groupId].names = participants; // Обновляем список участников
+                        drawWheel(participants, groupsState[groupId].segmentSize); // Перерисовываем колесо
+                        updatePlayerList(groupId, participants); // Функция для обновления списка в DOM
+                    }
+                } catch (e) {
+                    console.error("Ошибка при разборе участников для playerUpdate:", e);
+                }
+                break;
+
+            case "gameOver":
+                groupId = parts[1]; // Получаем ID группы из сообщения
+                alert(`Игра в группе ${groupId} завершена!`); // Показываем алерт
+                break;
+
+            default:
+                console.error("Неизвестное сообщение от WebSocket:", message);
+        }
+    };
+
+
+    socket.onerror = (error) => {
+        console.error("WebSocket Error:", error);
+    };
+
+    socket.onclose = () => {
+        console.log("WebSocket connection closed");
+    };
+
+    // Обработка команды на старт вращения
+    function handleWheelStart(groupId, participants) {
+        if (!groupsState[groupId]) {
+            groupsState[groupId] = { names: participants, isSpinning: false };
+        } else {
+            groupsState[groupId].names = participants;
+        }
+
+        if (!groupsState[groupId].names || groupsState[groupId].names.length === 0) {
+            console.warn(`Группа ${groupId} не найдена или имеет пустые имена.`);
+            return;
+        }
+
+        groupsState[groupId].isSpinning = true;
+        console.log("Имена игроков:", groupsState[groupId].names);
+        spinWheel(groupId); // Обновляем колесо
+    }
+
+
+    // Обработка команды на объявление победителя
+    function handleWinner(groupId, winnerIndex, participants) {
+        const group = groupsState[groupId] || { names: participants };
+
+        if (!group.names || group.names.length === 0) {
+            console.error(`У группы ${groupId} нет данных об участниках`);
+            return;
+        }
+
+        console.log(`Группа: ${groupId}, Победитель: ${group.names[winnerIndex]}`);
+
+        animateWinningSegment(winnerIndex, groupId); // Передаем groupId
+        displayWinner(group.names[winnerIndex]);
+
+        group.isSpinning = false;
+        groupsState[groupId] = group;
+    }
+
+
+    // Старт вращения колеса через WebSocket
+    function startWheel(groupId) {
+        if (groupsState[groupId]) {
+            socket.send(`startWheel:${groupId}`);
+        } else {
+            console.error(`Group ${groupId} not found in groupsState`);
+        }
+    }
+
+
+</script>
+
+</html>

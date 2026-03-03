@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Чат/Обсуждение/Вопросы</title>
+	<link rel="icon" href="/favicon/favicon.ico">
+	<link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+	<link rel="manifest" href="/favicon/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+    <title>Чат</title>
+    <style>
+             *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:Arial,sans-serif;background-color:#343a40;color:#fff;display:flex;flex-direction:column;min-height:100vh}
+        header{background-color:#495057;padding:15px;text-align:center;border-bottom:2px solid #ffc107}
+			 header h1{margin-bottom:10px;font-size:2.5rem;color:#ffffff}header p{font-size:1.2rem;color:#ffffff}
+       .navbar{background-color:#495057;padding:10px;text-align:center;border-bottom:2px solid #ffc107}.navbar a{color:#ffc107;text-decoration:none;margin:0 15px;font-size:1rem}.navbar a:hover{text-decoration:underline}
+ header img{width:150px;height:auto;margin:0 20px}
+		 footer {
+            background-color: #ff0000;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .container{flex:1;padding:20px;max-width:1200px;margin:0 auto}
+        .chat-section{background-color:#495057;border-radius:10px;padding:20px;margin-bottom:20px;box-shadow:0 4px 8px rgba(0,0,0,.2)}
+        .chat-section h2{font-size:1.8rem;margin-bottom:15px;color:#ffc107}
+        .message-list{background-color:#6c757d;border-radius:5px;padding:10px;margin-bottom:20px;max-height:300px;overflow-y:scroll}
+        .message{background-color:#343a40;border-radius:5px;padding:10px;margin-bottom:10px;color:#fff}
+        .message h3{font-size:1rem;margin-bottom:5px;color:#ffc107}
+        .message p{margin-bottom:5px;color:#adb5bd}
+        .chat-form{margin-top:20px}
+        .chat-form label{display:block;margin-bottom:5px;font-size:1rem;color:#fff}
+        .chat-form input[type="text"], .chat-form textarea{width:100%;padding:10px;border:1px solid #6c757d;border-radius:5px;background-color:#495057;color:#fff;font-size:1rem;margin-bottom:20px}
+        .chat-form input[type="submit"]{background-color:#ffc107;color:#000;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;transition:background-color .3s;font-size:1rem}
+        .chat-form input[type="submit"]:hover{background-color:#e0a800}
+		 header {
+			 background-image: url('/img/background1.webp'); /* Замените путь на путь к вашей картинке */
+			 background-size: cover; /* Обеспечивает, чтобы изображение занимало весь фон */
+			 background-position: center; /* Центрирует изображение */
+			 background-repeat: no-repeat; /* Не повторяет изображение */
+			 color: white; /* Цвет текста, чтобы он был виден на фоне */
+			 padding: 20px; /* Отступы внутри header */
+		 }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Катран</h1>
+    <p>Играй, выигрывай и развлекайся!</p>
+	<img src="/img/777.png" alt="Right Icon" class="title-icon">
+</header>
+
+
+<div class="navbar">
+    <a href="mainIndex">Домой</a>
+    <a href="profile">Мой профиль</a>
+    <a href="chat">Чат/Обсуждение/Вопросы</a>
+    <a href="help">Помощь</a>
+</div>
+
+
+<div class="container">
+    <section class="chat-section">
+        <h2>Чат пользователей</h2>
+
+		<div id="chat-container" th:if="${user != null}" th:text="${user.full_name}" style="display: none;"></div>
+
+		<div class="message-list" id="message-list">
+		<!-- Отображение последних 100 сообщений -->
+			<th:block th:each="message : ${lastMessages}">
+				<div class="message">
+					<h3 th:text="${message != null && message.full_name != null && message.full_name != '' ? message.full_name : 'Пользователь'}">Имя пользователя</h3>
+					<p th:text="${message.message}">Сообщение</p>
+				</div>
+			</th:block>
+
+		<div class="message">
+			<h3>Федоров Максим Федорович</h3>
+			<p>Вывел 3000 рублей с игры. Всё быстро, без проблем.</p>
+		</div>
+		<div class="message">
+			<h3>Наталья Васильева</h3>
+			<p>Андрей, да, я выводила на криптокошелек USDT. Прошло за пару часов.</p>
+		</div>
+		<div class="message">
+			<h3>Игнат Родионов</h3>
+			<p>Ребята, а вы замечали, что по вечерам слоты дают меньше? Или это только мне так везет?</p>
+		</div>
+
+		<div class="message">
+			<h3>Михаил Александрович</h3>
+			<p>да можно, я вывел в крипту , т.к. свифтом не получилось, оказывается я ошибся в реквизитах.Лучше переводить на крипту в бинанс, так быстрее и надежнее и проще.Без всяких не понятных банковских терминов</p>
+		</div>
+
+		<div class="message">
+			<h3>Андрей Федоров</h3>
+			<p>Ребята, а можно вывести на криптокошелек? Кто-нибудь пробовал?</p>
+		</div>
+
+		<div class="message">
+			<h3>Михаил Александрович</h3>
+			<p>Люди не выводите через свифт, деньги не пришли 3й день уже жду, а тех.поддержка говорит что перевод был</p>
+		</div>
+		<div class="message">
+			<h3>Екатерина Иванова</h3>
+			<p>Ограничений по суммам насколько я знаю нет, я выводила 15000 рублей, заняло около 30 минут.</p>
+		</div>
+		<div class="message">
+			<h3>Айбек Муратов</h3>
+			<p>Вывел 500 сомов. Кто выводил больше суммы, как быстро приходят деньги?</p>
+		</div>
+		<div class="message">
+			<h3>Владимир Николаев</h3>
+			<p>Всем привет! Вывел 4500 рублей, всё прошло успешно.</p>
+		</div>
+		<div class="message">
+			<h3>Анастасия Павлова</h3>
+			<p>Только что вывела 8000 рублей, всё отлично!</p>
+		</div>
+		<div class="message">
+			<h3>Дмитрий Петров</h3>
+			<p>просто выбери метод SWIFT, деньги конвертируются в сомы автоматически.</p>
+		</div>
+		<div class="message">
+			<h3>Ольга Кузнецова</h3>
+			<p>Кто знает, как вывести деньги в сомах?</p>
+		</div>
+		<div class="message">
+			<h3>Алексей Смирнов</h3>
+			<p>Вывел 12 000 тенге, деньги пришли на карту за 15 минут. Рекомендую!</p>
+		</div>
+		<div class="message">
+			<h3>Марат Газиев</h3>
+			<p>Всем привет! Кто нибудь выводил на Binance Wallet? Как быстро приходят деньги?</p>
+		</div>
+		<div class="message">
+			<h3>Арсений Яковлев</h3>
+			<p>У кого-то был опыт вывода крупной суммы? Каков максимум можно вывести за раз?</p>
+		</div>
+		<div class="message">
+			<h3>Георгий Хачатурян</h3>
+			<p>Слоты вчера дали крупный выигрыш! 2000 USD вывел без проблем, кто ещё что выиграл?</p>
+		</div>
+		<div class="message">
+			<h3>Тимур Мирзоев</h3>
+			<p>У кого-то были проблемы с выводом на PayPal? Мне говорят, что эта опция у них не активна.</p>
+		</div>
+		<div class="message">
+			<h3>Артем Левин</h3>
+			<p>Как долго обычно идет верификация для вывода на ETH?</p>
+		</div>
+		<div class="message">
+			<h3>Игорь Виноградов</h3>
+			<p>Привет! Кто-нибудь знает, на какие страны СНГ можно выводить средства на PayPal?</p>
+		</div>
+		<div class="message">
+			<h3>Евгений Сорокин</h3>
+			<p>Да, в Армении можно выводить средства на карты. Поддерживаются крупные банки, такие как АрмРус, ВТБ Армения и другие крупные финансовые учреждения.</p>
+		</div>
+		<div class="message">
+			<h3>Дмитрий Беляев</h3>
+			<p>Выводят ли деньги на карты в Армении? Если да, то какие банки поддерживают?</p>
+		</div>
+		<div class="message">
+			<h3>Станислав Попов</h3>
+			<p>Да, в Киргизии можно выводить средства на электронные кошельки, я выводил на счет в Бакай банке и еще в MBank</p>
+		</div>
+		<div class="message">
+			<h3>Алексей Гусев</h3>
+			<p>Привет всем! Выводят ли средства на электронные кошельки в Кыргызстане?</p>
+		</div>
+		<div class="message">
+			<h3>Алтынбек Арманбеков</h3>
+			<p>Вывод средств на карты в Казахстане поддерживают банки такие как Народный Банк и Kaspi Bank. Ограничения могут зависеть от конкретного банка и суммы.</p>
+		</div>
+		<div class="message">
+			<h3>Адилет Назарбеков</h3>
+			<p>Всем привет! Какие банки в Казахстане поддерживают вывод средств на карты? Есть ли ограничения?</p>
+		</div>
+		<div class="message">
+			<h3>Рустам Джалилов</h3>
+			<p>Да, в Узбекистане можно выводить средства на карты через банки, такие как Узпромстройбанк и Национальный Банк. Важно уточнять условия у вашего провайдера услуг.</p>
+		</div>
+		<div class="message">
+			<h3>Ильдар Сеитов</h3>
+			<p>Есть ли проблемы при выводе средств на карты в Узбекистане? Какие банки поддерживают?</p>
+		</div>
+		<div class="message">
+			<h3>Арман Кайнарбеков</h3>
+			<p>Вывод средств на электронные кошельки в Казахстане обычно прост, но важно учитывать возможные комиссии и ограничения по суммам.</p>
+		</div>
+		<div class="message">
+			<h3>Нурлан Асанов</h3>
+			<p>Какой процесс вывода на электронные кошельки в Казахстане? Есть ли сложности?</p>
+		</div>
+		<div class="message">
+			<h3>Дилшод Назаров</h3>
+			<p>я в Таджикистане выводил на свою карту</p>
+		</div>
+		<div class="message">
+			<h3>Дилшод Назаров</h3>
+			<p>В Таджикистане вывод средств на карты не имеет строгих ограничений, но лучше уточнить условия у конкретного банка или сервиса.</p>
+		</div>
+		<div class="message">
+			<h3>Рахимбек Султанов</h3>
+			<p>Кто пробовал вывод средств в Таджикистане? Какой опыт?</p>
+		</div>
+
+</div>
+
+		<form class="chat-form" id="chat-form" action="chat/send-message" method="post">
+			<label for="message">Ваше сообщение</label>
+			<textarea id="message" name="message" required placeholder="Введите сообщение"></textarea>
+			<input type="submit" value="Отправить сообщение">
+		</form>
+
+	</section>
+</div>
+
+<footer>
+    <p>&copy; 2024 Катран. Все права защищены.</p>
+</footer>
+<script>
+	document.getElementById('chat-form').addEventListener('submit', function (event) {
+		event.preventDefault();
+
+		// Проверка наличия контейнера с именем пользователя
+		const chatContainer = document.getElementById('chat-container');
+		if (!chatContainer) {
+			console.error('Элемент #chat-container не найден.');
+			window.location.href = '/signIn';
+			return;
+		}
+
+		const username = chatContainer ? chatContainer.textContent.trim() : null;
+
+		if (!username || username === '') {
+			console.warn('Имя пользователя отсутствует или пустое. Невозможно отправить сообщение.');
+			return; // Just return without redirecting, as username is empty
+		}
+
+		// Получение значения сообщения
+		const messageInput = document.getElementById('message');
+		if (!messageInput) {
+			console.error('Поле ввода сообщения не найдено');
+			return;
+		}
+		const messageContent = messageInput.value.trim();
+		if (!messageContent) {
+			console.warn('Пустое сообщение. Нечего отправлять.');
+			return;
+		}
+
+		// Создание нового элемента сообщения
+		const newMessage = document.createElement('div');
+		newMessage.classList.add('message');
+		newMessage.innerHTML = `<h3>${username}</h3><p>${messageContent}</p>`;
+
+		// Добавление нового сообщения в начало списка
+		const messageList = document.getElementById('message-list');
+		if (!messageList) {
+			console.error('Элемент #message-list не найден');
+			return;
+		}
+		messageList.insertBefore(newMessage, messageList.firstChild);
+
+		// Удаление последнего сообщения, если превышен лимит
+		if (messageList.children.length > 10) {
+			messageList.removeChild(messageList.lastChild);
+			console.log('Удалено последнее сообщение');
+		}
+
+		// Отправка сообщения на сервер
+		fetch('/chat/send-message', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ message: messageContent }),
+		})
+				.then((response) => response.json())
+				.then((data) => {
+					if (data.code === 0) {
+						messageInput.value = '';
+						console.log('Сообщение успешно отправлено');
+					} else if (data.code === 303) {
+						console.warn('Перенаправление на страницу входа');
+						window.location.href = '/signIn';
+					} else {
+						console.error('Неизвестный код ответа:', data.code, data.message);
+					}
+				})
+				.catch((error) => {
+					console.error('Ошибка при отправке сообщения:', error);
+				});
+	});
+
+</script>
+
+</body>
+</html>

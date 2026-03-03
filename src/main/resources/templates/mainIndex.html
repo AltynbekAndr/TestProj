@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Главная</title>
+    <link rel="icon" href="/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background-color:#343a40;color:#fff;display:flex;flex-direction:column;min-height:100vh}header{background-color:#495057;padding:15px;text-align:center;border-bottom:2px solid #ffc107}header h1{margin-bottom:10px;font-size:2.5rem;color:#ffffff}header p{font-size:1.2rem;color:#ffffff}.navbar{background-color:#495057;padding:10px;text-align:center;border-bottom:2px solid #ffc107}.navbar a{color:#ffc107;text-decoration:none;margin:0 15px;font-size:1rem}.navbar a:hover{text-decoration:underline}.container{flex:1;padding:20px;max-width:1200px;margin:0 auto}.game-section,.news-section,.payment-section,.profile-section,.stats-section,.withdrawal-section{background-color:#495057;border-radius:10px;padding:20px;margin-bottom:20px;box-shadow:0 4px 8px rgba(0,0,0,.2)}.game-section h2,.news-section h2,.payment-section h2,.profile-section h2,.stats-section h2,.withdrawal-section h2{font-size:1.8rem;margin-bottom:15px;color:#ffc107}.withdrawal-section .balance-info{margin-bottom:15px}.game-section button,.payment-section button,.withdrawal-section button{background-color:#ffc107;color:#000;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;transition:background-color .3s;font-size:1rem}.game-section button:hover,.payment-section button:hover,.withdrawal-section button:hover{background-color:#e0a800}.stats-section{display:flex;justify-content:space-between}.stats-item{width:24%;background-color:#6c757d;padding:10px;border-radius:5px;box-shadow:0 2px 4px rgba(0,0,0,.2);text-align:center}.stats-item h3{font-size:.8rem;margin-bottom:10px;color:#ffc107}.payment-section input[type=number],.payment-section select,.withdrawal-section input[type=number],.withdrawal-section select{padding:10px;border:1px solid #6c757d;border-radius:5px;background-color:#495057;color:#fff;font-size:1rem;width:100%;margin-bottom:20px}.payment-section input[type=submit],.withdrawal-section input[type=submit]{background-color:#ffc107;color:#000;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;transition:background-color .3s;font-size:1rem}.payment-section input[type=submit]:hover,.withdrawal-section input[type=submit]:hover{background-color:#e0a800}.news-item{background-color:#6c757d;border-radius:5px;padding:15px;margin-bottom:10px;box-shadow:0 2px 4px rgba(0,0,0,.2)}.news-item h4{color:#ffc107;margin-bottom:10px}.news-item p{color:#adb5bd}.profile-section{background-color:#495057;border-radius:10px;padding:20px;margin-bottom:20px;box-shadow:0 4px 8px rgba(0,0,0,.2)}.profile-section p{font-size:1rem;margin-bottom:10px}.profile-section .btn{background-color:#ffc107;color:#000;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;transition:background-color .3s;font-size:1rem}.profile-section .btn:hover{background-color:#e0a800}.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.5);justify-content:center;align-items:center}.modal-content{background-color:#495057;color:#fff;border-radius:10px;padding:20px;width:80%;max-width:500px;box-shadow:0 4px 8px rgba(0,0,0,.2);position:relative}.modal-content h2{font-size:1.8rem;margin-bottom:15px;color:#ffc107}.modal-content p{margin-bottom:10px}.modal-content img{display:block;margin:0 auto;width:100px;height:100px}.modal-content button{background-color:#ffc107;color:#000;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;transition:background-color .3s;font-size:1rem;margin-top:20px}.modal-content button:hover{background-color:#e0a800}.close{position:absolute;top:10px;right:20px;font-size:1.5rem;cursor:pointer;color:#ffc107}.hidden{display:none}.confirmation-form{margin-top:20px}.confirmation-form label{display:block;margin-bottom:5px;font-size:1rem;color:#fff}.confirmation-form input[type=file],.confirmation-form input[type=text]{width:100%;padding:10px;border:1px solid #6c757d;border-radius:5px;background-color:#495057;color:#fff;font-size:1rem;margin-bottom:20px}.confirmation-form input[type=submit]{background-color:#ffc107;color:#000;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;transition:background-color .3s;font-size:1rem}.confirmation-form input[type=submit]:hover{background-color:#e0a800}header img{width:150px;height:auto;margin:0 20px}
+        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.7);justify-content:center;align-items:center}.modal-content{background-color:#495057;color:#fff;border-radius:10px;padding:20px;width:90%;max-width:500px;box-shadow:0 4px 8px rgba(0,0,0,.3);position:relative;text-align:left}.close{position:absolute;top:10px;right:20px;font-size:1.5rem;cursor:pointer;color:#ffc107}.modal-content h2{font-size:1.8rem;margin-bottom:20px;color:#ffc107}.modal-content form{display:flex;flex-direction:column}.modal-content label{margin-bottom:10px;font-size:1rem;color:#fff}.modal-content input[type=text],.modal-content textarea{width:100%;padding:10px;border:1px solid #6c757d;border-radius:5px;background-color:#495057;color:#fff;font-size:1rem;margin-bottom:15px}.modal-content input[type=submit]{background-color:#ffc107;color:#000;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;transition:background-color .3s;font-size:1rem}.modal-content input[type=submit]:hover{background-color:#e0a800}.modal-content textarea{resize:vertical;min-height:100px}
+        footer {
+            background-color: #ff0000;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        header {
+            background-image: url('/img/background1.webp'); /* Замените путь на путь к вашей картинке */
+            background-size: cover; /* Обеспечивает, чтобы изображение занимало весь фон */
+            background-position: center; /* Центрирует изображение */
+            background-repeat: no-repeat; /* Не повторяет изображение */
+            color: white; /* Цвет текста, чтобы он был виден на фоне */
+            padding: 20px; /* Отступы внутри header */
+        }
+        #success-message, #error-message {
+            display: none; /* По умолчанию скрыто */
+            font-size: 1rem;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            position: fixed;
+            top: 0;
+            z-index: 999;
+        }
+        #error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Стили для формы */
+        #bank-details, #card-details, #crypto-details {
+            background-color: #495057;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, .2);
+        }
+
+        /* Стили для полей ввода и выбора */
+        #bank-details input[type="text"],
+        #bank-details select,
+        #card-details select,
+        #crypto-details select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #6c757d;
+            border-radius: 5px;
+            background-color: #495057;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        /* Стили для заголовков */
+        #bank-details label,
+        #card-details label,
+        #crypto-details label {
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        /* Стили для option внутри select */
+        #bank-details select option,
+        #card-details select option,
+        #crypto-details select option {
+            background-color: #495057;
+            color: white;
+        }
+
+        /* Стили для опций при наведении */
+        #bank-details select option:hover,
+        #card-details select option:hover,
+        #crypto-details select option:hover {
+            background-color: #6c757d;
+            color: #ffc107;
+        }
+
+        /* Дополнительные стили для кнопок (если есть) */
+        button {
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e0a800;
+        }
+        /* Стили для метки (label) */
+        #cashout {
+            margin-bottom: 10px;
+            color: white;
+            font-size: 1rem;
+            display: block;
+        }
+
+        /* Стили для поля ввода суммы */
+        #cashout {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #6c757d;
+            border-radius: 5px;
+            background-color: #495057;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        /* Стили для placeholder внутри поля */
+        #cashout::placeholder {
+            color: #adb5bd;
+        }
+
+        /* Стили для поля при фокусе */
+        #cashout:focus {
+            border-color: #ffc107;
+            outline: none;
+            box-shadow: 0 0 5px rgba(255, 193, 7, 0.75);
+        }
+
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Катран</h1>
+    <p>Играй, выигрывай и развлекайся!</p>
+    <img src="/img/777.png" alt="Right Icon" class="title-icon">
+</header>
+
+<div class="navbar">
+    <a href="mainIndex">Домой</a>
+    <a href="profile">Мой профиль</a>
+    <a href="chat">Чат/Обсуждение/Вопросы</a>
+    <a href="help">Помощь</a>
+</div>
+
+<div class="container">
+    <section class="game-section">
+        <h2>Игры</h2>
+        <p>Сейчас на сайте: <span th:text="${onlineUsers}"></span> пользователей</p>
+        <br>
+        <p>Выберите игру и начните делать ставки.</p>
+        <button id="start-game"><a href="game">Колесо</a></button>
+        <button id="slot-game"><a href="slotGame">Слот</a></button>
+
+    </section>
+
+    <section class="stats-section">
+        <div class="stats-item">
+            <h3>Сумма всех ставок</h3>
+            <p><span th:text="${user != null ? user.totalAmount : 0}"></span>  $</p>
+        </div>
+        <div class="stats-item">
+            <h3>Остаток вашего счета</h3>
+            <p> <span th:text="${user != null ? user.amount : 0}"></span> $</p>
+        </div>
+        <div class="stats-item">
+            <h3>Вывод средств</h3>
+            <p><span style="display: block; margin-top: 24px;">0 $</span></p>
+        </div>
+
+        <div class="stats-item" style="max-width: 200px; word-wrap: break-word; text-align: center; ">
+            <h3>Статистика</h3>
+            <p>Пока нет данных</p>
+        </div>
+    </section>
+
+    <section class="payment-section">
+        <h2>Пополнение счета</h2>
+        <form id="payment-form">
+            <label for="payment-method">Способ пополнения</label>
+            <select id="payment-method" name="payment-method" required>
+                <option value="crypto">Криптовалюта USDT(TRC20)</option>
+                <option value="card">Пополнение картой (Visa/MasterCard)</option>
+                <option value="paypal" disabled>Пополнение с помощью PayPal</option>
+                <option value="payoneer" disabled>Пополнение с помощью Payoneer</option>
+            </select>
+
+            <label for="cashin">Сумма для пополнения</label>
+            <input type="number" id="cashin" name="amount" required placeholder="Введите сумму">
+
+            <input type="submit" value="Пополнить">
+        </form>
+    </section>
+
+
+
+    <section class="withdrawal-section">
+        <h2>Вывод средств</h2>
+        <div class="balance-info">
+            <p><strong>Текущий остаток на счету:</strong> <span th:if="${user != null}" th:text="${user.amount}"></span></p>
+        </div>
+        <form id="withdrawal-form">
+            <label for="withdrawal-method">Метод вывода</label>
+            <select id="withdrawal-method" name="withdrawal-method" required>
+                <option value="bank" selected >Банковский перевод</option>
+                <option value="card">Вывод на карту(Visa/MasterCard)</option>
+                <option value="crypto">Криптовалюта (USDT, BTC, ETH)</option>
+                <option value="paypal" disabled>PayPal</option>
+                <option value="payoneer" disabled>Payoneer</option>
+            </select>
+
+
+            <input type="submit" value="Вывести">
+        </form>
+    </section>
+    <section class="news-section">
+        <h2>Новости и Акции</h2>
+        <div class="news-item">
+            <h4>Акция месяца</h4>
+            <p th:text="${stock != null ? stock.stock_text : 'Получите бонус 50% на первое пополнение счета! Акция действует до конца месяца.'}"></p>
+        </div>
+    </section>
+
+    <section class="profile-section">
+        <h2>Личный Профиль</h2>
+        <p><strong>Имя:</strong> <span th:if="${user != null}" th:text="${user.username}"></span></p>
+        <p><strong>Баланс:</strong> <span th:if="${user != null}" th:text="${user.amount}"></span></p>
+        <button class="btn"><a href="/profile">Редактировать профиль</a></button>
+    </section>
+</div>
+
+<!-- Модальное окно для пополнения счета (криптовалюта) -->
+<div class="modal" id="payment-modal">
+    <div class="modal-content">
+        <span class="close" id="close-modal">&times;</span>
+        <h2>Пополнение счета (Криптовалюта)</h2>
+        <p><strong>ФИО:</strong> <span th:text="${user.full_name}"></span></p>
+        <p><strong>Ваш счет:</strong> <span th:text="${user.acc_number}"></span></p>
+        <p><strong>USDT (TRC20):</strong></p>
+        <p>TTJm36AAQzjnR5Mv9mvFZMvHSwiPVRt9wJ</p>
+        <img src="/img/qr-usdt.jpg" alt="QR Code">
+        <div id="payment-success-message" style="display: none; color: green;">Ваш платеж подтвержден!</div>
+        <div id="payment-error-message" style="display: none; color: red;">Ошибка подтверждения платежа.</div>
+        <form class="confirmation-form" id="confirmation-form">
+            <label for="transaction-id">ID транзакции</label>
+            <input type="text" id="transaction-id" name="transaction-id" placeholder="Введите ID транзакции" required>
+            <label for="receipt">Загрузите чек (скриншот)</label>
+            <input type="file" id="receipt" name="receipt" accept="image/*" required>
+            <input type="submit" value="Подтвердить платеж">
+        </form>
+        <button id="close-modal-btn">Закрыть</button>
+    </div>
+</div>
+
+<!-- Модальное окно для пополнения картой -->
+<div class="modal" id="card-payment-modal">
+    <div class="modal-content">
+        <span class="close" id="close-card-modal">&times;</span>
+        <h2>Пополнение счета картой</h2>
+        <p><strong>ФИО:</strong> <span th:text="${user.full_name}"></span></p>
+        <p><strong>Ваш счет:</strong> <span th:text="${user.acc_number}"></span></p>
+        <p><strong>Visa/MasterCard/Mir:</strong></p>
+        <p>**** **** **** <span id="last-four-card-number">1234</span></p>
+        <img src="/img/qr-usdt.jpg" alt="QR Code">
+        <div id="card-payment-success-message" style="display: none; color: green;">Ваш платеж подтвержден!</div>
+        <div id="card-payment-error-message" style="display: none; color: red;">Ошибка подтверждения платежа.</div>
+        <form class="confirmation-form" id="card-confirmation-form">
+            <label for="transaction-id">ID транзакции</label>
+            <input type="text" id="card-transaction-id" name="transaction-id" placeholder="Введите ID транзакции" required>
+            <label for="receipt">Загрузите чек (скриншот)</label>
+            <input type="file" id="card-receipt" name="receipt" accept="image/*" required>
+            <input type="submit" value="Подтвердить платеж">
+        </form>
+        <button id="close-card-modal-btn">Закрыть</button>
+    </div>
+</div>
+
+<!-- Модальное окно для вывода средств -->
+<div id="withdrawal-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="close-withdrawal-modal">&times;</span>
+        <h2>Введите реквизиты для вывода</h2>
+
+        <form id="withdrawal-modal-form" method="post" action="sendMoney">
+            <!-- Поля для банковского перевода -->
+            <div id="bank-details" class="hidden">
+                <label for="swift-code">SWIFT/BIC-код банка</label>
+                <input type="text" id="swift-code" name="swiftCode" placeholder="Введите SWIFT код">
+                <label for="bank-account">Номер банковского счета (IBAN)</label>
+                <select id="bank-account" name="bank-account">
+                    <th:block th:each="account : ${accounts}">
+                        <th:block th:if="${#strings.startsWith(account.accountType, 'SWIFT')}">
+                            <option th:value="${account.accountNumber}" th:text="${account.accountNumber}"></option>
+                        </th:block>
+                    </th:block>
+                </select>
+                <label for="fullname">ФИО Получателя</label>
+                <select id="fullname" name="fullname">
+                    <th:block th:each="account : ${accounts}">
+                        <th:block th:if="${#strings.startsWith(account.accountType, 'SWIFT')}">
+                            <option th:value="${account.accountNumber}" th:text="${account.customerName}"></option>
+                        </th:block>
+                    </th:block>
+                </select>
+            </div>
+
+            <!-- Поля для карточного перевода -->
+            <div id="card-details" class="hidden">
+                <label for="card-number">Выберите карту</label>
+                <select id="card-number" name="cardNumber">
+                    <th:block th:each="account : ${accounts}">
+                        <th:block th:if="${#strings.startsWith(account.accountType, 'CARD')}">
+                            <option th:value="${account.accountNumber}" th:text="${account.accountNumber}"></option>
+                        </th:block>
+                    </th:block>
+                </select>
+            </div>
+
+            <!-- Поля для криптокошелька -->
+            <div id="crypto-details" class="hidden">
+                <label for="crypto-address">Выберите криптокошелек</label>
+                <select id="crypto-address" name="cryptoAddress">
+                    <th:block th:each="account : ${accounts}">
+                        <th:block th:if="${#strings.startsWith(account.accountType, 'Crypto')}">
+                            <option th:value="${account.accountNumber}" th:text="${account.accountNumber}"></option>
+                        </th:block>
+                    </th:block>
+                </select>
+
+                <label for="crypto-type">Тип криптовалюты</label>
+                <select id="crypto-type" name="crypto-type">
+                    <option value="usdt">USDT</option>
+                    <option value="btc">BTC</option>
+                    <option value="eth">ETH</option>
+                </select>
+            </div>
+
+            <label for="cashout">Сумма для вывода</label>
+            <input type="number" id="cashout" name="amount" required placeholder="Введите сумму">
+
+            <label for="additional-info">Дополнительная информация, Банк-посредник (если есть): Укажите название, адрес и SWIFT/BIC код банка-посредника.</label>
+            <textarea id="additional-info" name="additional-info" placeholder="Введите дополнительную информацию"></textarea>
+
+            <div id="success-message">Ваш запрос на вывод средств отправлен!</div>
+            <div id="error-message" style="display: none;">Произошла ошибка. Попробуйте отправить сообщение позже.</div>
+
+            <input type="submit" value="Подтвердить вывод">
+        </form>
+
+        <button id="close-withdrawal-modal-btn">Закрыть</button>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Катран. Все права защищены.</p>
+</footer>
+<script>
+    function toggleTransferFields() {
+        var transferType = document.getElementById('transfer-type').value;
+        document.getElementById('bank-details').classList.add('hidden');
+        document.getElementById('card-details').classList.add('hidden');
+        document.getElementById('crypto-details').classList.add('hidden');
+
+        if (transferType === 'bank') {
+            document.getElementById('bank-details').classList.remove('hidden');
+        } else if (transferType === 'card') {
+            document.getElementById('card-details').classList.remove('hidden');
+        } else if (transferType === 'crypto') {
+            document.getElementById('crypto-details').classList.remove('hidden');
+        }
+    }
+
+    // Инициализация по умолчанию
+    document.addEventListener('DOMContentLoaded', function () {
+        toggleTransferFields();
+    });
+    document.getElementById('payment-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        document.getElementById('payment-modal').style.display = 'flex';
+    });
+
+    document.getElementById('withdrawal-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        document.getElementById('withdrawal-modal').style.display = 'flex';
+    });
+
+    document.getElementById('close-modal').addEventListener('click', function() {
+        document.getElementById('payment-modal').style.display = 'none';
+    });
+
+    document.getElementById('close-modal-btn').addEventListener('click', function() {
+        document.getElementById('payment-modal').style.display = 'none';
+    });
+
+    document.getElementById('close-withdrawal-modal').addEventListener('click', function() {
+        document.getElementById('withdrawal-modal').style.display = 'none';
+    });
+
+    document.getElementById('close-withdrawal-modal-btn').addEventListener('click', function() {
+        document.getElementById('withdrawal-modal').style.display = 'none';
+    });
+
+    document.getElementById('withdrawal-method').addEventListener('change', updateModalFields);
+
+    function updateModalFields() {
+        const method = document.getElementById('withdrawal-method').value;
+
+        document.getElementById('bank-details').classList.add('hidden');
+        document.getElementById('card-details').classList.add('hidden');
+        document.getElementById('crypto-details').classList.add('hidden');
+
+        if (method === 'bank') {
+            document.getElementById('bank-details').classList.remove('hidden');
+        } else if (method === 'card') {
+            document.getElementById('card-details').classList.remove('hidden');
+        } else if (method === 'crypto') {
+            document.getElementById('crypto-details').classList.remove('hidden');
+        }
+    }
+
+    window.addEventListener('load', function() {
+        updateModalFields();
+    });
+
+    // Обработка вывода средств
+    document.querySelector('#withdrawal-modal-form').addEventListener('submit', (e) => {
+        e.preventDefault(); // Останавливаем стандартную отправку формы временно
+
+        const form = document.querySelector('#withdrawal-modal-form'); // Форма
+        const amountField = document.querySelector('#cashout'); // Поле суммы
+        const successMessage = document.getElementById('success-message');
+        const errorMessage = document.getElementById('error-message');
+
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
+
+        if (amountField && parseFloat(amountField.value) > 0) {
+            successMessage.textContent = 'Ваш запрос на вывод средств успешно отправлен!';
+            successMessage.style.display = 'block';
+
+            // Через 3 секунды отправляем форму
+            setTimeout(() => {
+                form.submit();
+            }, 3000);
+        } else {
+            errorMessage.textContent = 'Ошибка: Введите корректную сумму!';
+            errorMessage.style.display = 'block';
+        }
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Функция для переключения модальных окон в зависимости от выбранного способа пополнения
+        document.getElementById('payment-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение формы
+
+            // Получаем выбранный способ пополнения
+            var paymentMethod = document.getElementById('payment-method').value;
+
+            // Скрываем оба модальных окна
+            document.getElementById('payment-modal').style.display = 'none';
+            document.getElementById('card-payment-modal').style.display = 'none';
+
+            // Показываем соответствующее модальное окно в зависимости от выбранного способа
+            if (paymentMethod === 'crypto') {
+                document.getElementById('payment-modal').style.display = 'flex'; // Окно для криптовалюты
+            } else if (paymentMethod === 'card') {
+                document.getElementById('card-payment-modal').style.display = 'flex'; // Окно для карты
+            }
+        });
+
+        // Закрытие модального окна для криптовалюты
+        document.getElementById('close-modal').addEventListener('click', function() {
+            document.getElementById('payment-modal').style.display = 'none';
+        });
+
+        // Закрытие модального окна для карты
+        document.getElementById('close-card-modal').addEventListener('click', function() {
+            document.getElementById('card-payment-modal').style.display = 'none';
+        });
+
+        // Закрытие модального окна для криптовалюты с кнопки "Закрыть"
+        document.getElementById('close-modal-btn').addEventListener('click', function() {
+            document.getElementById('payment-modal').style.display = 'none';
+        });
+
+        // Закрытие модального окна для карты с кнопки "Закрыть"
+        document.getElementById('close-card-modal-btn').addEventListener('click', function() {
+            document.getElementById('card-payment-modal').style.display = 'none';
+        });
+
+        // Обработка подтверждения платежа для криптовалюты
+        document.getElementById('confirmation-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const transactionId = document.getElementById('transaction-id').value;
+            const receipt = document.getElementById('receipt').files[0];
+
+            const successMessage = document.getElementById('payment-success-message');
+            const errorMessage = document.getElementById('payment-error-message');
+
+            // Сброс сообщений перед проверкой
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            // Проверка наличия ID транзакции
+            if (!transactionId.trim()) {
+                errorMessage.textContent = 'Ошибка: Пожалуйста, введите ID транзакции.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Проверка наличия загруженного чека
+            if (!receipt) {
+                errorMessage.textContent = 'Ошибка: Пожалуйста, загрузите чек.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Успешное подтверждение платежа
+            successMessage.textContent = 'Ваш платеж подтвержден! Транзакция будет обработана.';
+            successMessage.style.display = 'block';
+
+            // Сброс полей формы пополнения счета
+            document.getElementById('confirmation-form').reset();
+            document.getElementById('transaction-id').value = '';
+            document.getElementById('receipt').value = '';
+
+            // Закрытие модального окна через 3 секунды
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+                document.getElementById('payment-modal').style.display = 'none';
+            }, 3000);
+        });
+
+        // Обработка подтверждения платежа для карты
+        document.getElementById('card-confirmation-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const transactionId = document.getElementById('card-transaction-id').value;
+            const receipt = document.getElementById('card-receipt').files[0];
+
+            const successMessage = document.getElementById('card-payment-success-message');
+            const errorMessage = document.getElementById('card-payment-error-message');
+
+            // Сброс сообщений перед проверкой
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            // Проверка наличия ID транзакции
+            if (!transactionId.trim()) {
+                errorMessage.textContent = 'Ошибка: Пожалуйста, введите ID транзакции.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Проверка наличия загруженного чека
+            if (!receipt) {
+                errorMessage.textContent = 'Ошибка: Пожалуйста, загрузите чек.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Успешное подтверждение платежа
+            successMessage.textContent = 'Ваш платеж подтвержден! Транзакция будет обработана.';
+            successMessage.style.display = 'block';
+
+            // Сброс полей формы пополнения счета
+            document.getElementById('card-confirmation-form').reset();
+            document.getElementById('card-transaction-id').value = '';
+            document.getElementById('card-receipt').value = '';
+
+            // Закрытие модального окна через 3 секунды
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+                document.getElementById('card-payment-modal').style.display = 'none';
+            }, 3000);
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

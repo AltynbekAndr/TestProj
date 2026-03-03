@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Катран</title>
+	<link rel="icon" href="/favicon/favicon.ico">
+	<link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+	<link rel="manifest" href="/favicon/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Arial', sans-serif;
+			background-color: #343a40;
+			color: #fff;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+
+		.container {
+			background-color: #495057;
+			padding: 40px;
+			border-radius: 10px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+			max-width: 400px;
+			width: 100%;
+		}
+
+		h2 {
+			text-align: center;
+			margin-bottom: 20px;
+			font-size: 2rem;
+			color: #ffc107;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+		}
+
+		label {
+			font-size: 1rem;
+			margin-bottom: 5px;
+		}
+
+		input {
+			padding: 10px;
+			margin-bottom: 20px;
+			border: 1px solid #6c757d;
+			border-radius: 5px;
+			font-size: 1rem;
+			background-color: #495057;
+			color: #fff;
+		}
+
+		input[type="submit"] {
+			background-color: #ffc107;
+			color: #000;
+			border: none;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+
+		input[type="submit"]:hover {
+			background-color: #e0a800;
+		}
+
+		.small-text {
+			font-size: 0.8rem;
+			text-align: center;
+			color: #adb5bd;
+			margin-top: 10px;
+		}
+
+		a {
+			color: #ffc107;
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+
+<div class="container">
+	<h2>Авторизация</h2>
+	<div>
+		<p th:if="${error == 'invalidCredentials'}">Неправильный username или пароль.</p>
+	</div>
+	<br>
+	<br>
+	<form action="signIn" method="POST">
+		<label for="username">Имя пользователя</label>
+		<input type="username" id="username" name="username" required placeholder="Имя">
+
+		<label for="password">Пароль</label>
+		<input type="password" id="password" name="password" required placeholder="********">
+
+		<input type="submit" value="Войти">
+	</form>
+	<p class="small-text">Нет аккаунта? <a href="registration">Зарегистрироваться</a></p>
+	<p class="small-text">Забыли пароль? <a href="forgot-password">Восстановить пароль</a></p>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

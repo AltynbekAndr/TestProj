@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #0d0d0d;
+            color: white;
+            flex-direction: column;
+            background-image: url('/img/slot1.jpg');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .navbar {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 255, 255, 0.4);
+        }
+
+        .navbar a {
+            color: #ffad00;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #6a0035;
+            text-decoration: underline;
+        }
+
+        .slot-container {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            top: 140px;
+            gap: 10px;
+            background-color: rgba(30, 30, 30, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 100px rgba(0, 60, 255, 0.5);
+        }
+
+        .slot-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        #middleRow {
+            position: relative; /* Для точного позиционирования линии */
+            padding-top: 10px; /* Немного отодвигаем содержимое */
+        }
+
+        #middleRow::before {
+            z-index: 9;
+            content: "";
+            position: absolute;
+            top: 80px; /* Линия будет располагаться прямо над колонками */
+            left: 0;
+            width: 100%; /* Линия растягивается на всю ширину ряда */
+            height: 2px; /* Толщина линии */
+            background-color: #ff9000; /* Цвет линии */
+        }
+
+
+        .column {
+            position: relative;
+            width: 120px;
+            height: 140px;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 2px solid #444;
+            background-color: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+            background-image: linear-gradient(145deg, #333, #111);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .column:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+        }
+
+        .column-inner {
+            position: relative;
+            z-index: 2;
+            color: #00ff99;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .fruit-container {
+            position: absolute;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            width: 100%;
+            transition: top 1s ease-out;
+        }
+
+        .fruit {
+            font-size: 80px;
+            text-align: center;
+            line-height: 120px;
+            height: 120px;
+            transition: transform 0.4s ease, font-size 0.4s ease;
+            cursor: pointer;
+            color: #ff99ff;
+        }
+
+        .fruit:hover {
+            transform: scale(1.4);
+            font-size: 100px;
+            color: #00ff99;
+        }
+
+        #spinButton {
+            position: relative;
+            top: -80px;
+            left: 250px;
+            margin-top: 30px;
+            padding: 20px 50px;
+            font-size: 1.6rem;
+            background-color: #ca9000;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 0 25px rgba(255, 0, 119, 0.8);
+        }
+
+        #spinButton:hover {
+            background-color: #fff200;
+            transform: scale(1.1);
+            box-shadow: 0 0 35px rgba(255, 250, 0, 0.8);
+        }
+
+        #message {
+            color: #fff;
+            margin-top: 40px;
+            position: relative;
+            top: -100px;
+            font-size: 2.5rem;
+            text-align: center;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .win {
+            color: #00ff99;
+            animation: winAnimation 1s infinite;
+            text-shadow: 0 0 10px #00ff99, 0 0 20px #00ff99;
+        }
+
+        .lose {
+            color: #ff0044;
+            font-size: 2.5rem;
+        }
+
+        @keyframes winAnimation {
+            0% { text-shadow: 0 0 15px #00ff99, 0 0 25px #00ff99; }
+            100% { text-shadow: 0 0 20px #00ff99, 0 0 40px #00ff99; }
+        }
+
+        /* Стили для блока ставки */
+        .bet-container {
+            margin-top: 30px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 1.5rem;
+        }
+
+        .bet-container button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            border: none;
+        }
+
+        .bet-container button:hover {
+            transform: scale(1.1);
+        }
+
+        .bet-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        .increase {
+            background-color: #17c13c;
+            color: white;
+            box-shadow: 0 0 25px rgba(0, 255, 13, 0.8);
+        }
+
+        .decrease {
+            background-color: #dc3545;
+            color: white;
+            box-shadow: 0 0 25px rgba(239, 6, 6, 0.8);
+        }
+
+        .main-container {
+            position: relative;
+            height: 100%;
+            left: -300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .profile-container {
+            display: flex;
+            position: relative;
+            left: -400px;
+            top: -600px;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 149, 255, 0.5);
+            text-align: center;
+            width: 200px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #ffcc00;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+            margin-bottom: 10px;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-bottom: 5px;
+        }
+
+        .profile-balance {
+            font-size: 1.2rem;
+            color: #003cff;
+            font-weight: bold;
+        }
+
+        .win {
+            color: green;
+            font-weight: bold;
+        }
+
+        .lose {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media screen and (max-width: 768px) {
+            .navbar a {
+                font-size: 1rem;
+                margin: 0 8px;
+            }
+            #middleRow {
+                position: relative; /* Для точного позиционирования линии */
+                padding-top: 10px; /* Немного отодвигаем содержимое */
+            }
+
+            #middleRow::before {
+                z-index: 9;
+                content: "";
+                position: absolute;
+                top: 60px; /* Линия будет располагаться прямо над колонками */
+                left: 0;
+                width: 100%; /* Линия растягивается на всю ширину ряда */
+                height: 2px; /* Толщина линии */
+                background-color: #ff9000; /* Цвет линии */
+            }
+
+            .slot-container {
+                padding: 10px;
+                gap: 5px;
+            }
+            .main-container {
+                height: auto;
+                position: relative;
+                left: -260px;
+                top: -30px;/* Убираем жесткую высоту */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px; /* Уменьшаем расстояние между элементами */
+                width: 20%; /* Увеличиваем ширину контейнера */
+            }
+            .profile-container {
+                display: flex;
+                position: relative;
+                flex-direction: column;
+                align-items: center;
+                background: rgba(0, 0, 0, 0.8);
+                padding: 10px; /* Уменьшаем отступы */
+                border-radius: 8px; /* Уменьшаем радиус скругления */
+                box-shadow: 0 0 10px rgba(0, 149, 255, 0.5); /* Уменьшаем тень */
+                text-align: center;
+                width: 120px; /* Уменьшаем ширину */
+                top: -150px; /* Уменьшаем сдвиг */
+                left: 0; /* Убираем сдвиг */
+            }
+
+            .profile-avatar {
+                width: 10px; /* Уменьшаем размер аватара */
+                height: 10px; /* Уменьшаем размер аватара */
+                border-radius: 50%; /* Округляем аватар */
+                border: 2px solid #ffcc00; /* Уменьшаем толщину рамки */
+                box-shadow: 0 0 8px rgba(255, 204, 0, 0.8); /* Уменьшаем тень */
+                margin-bottom: 8px; /* Уменьшаем отступ */
+            }
+            .profile-name {
+                font-size: 1.2rem; /* Уменьшаем размер шрифта */
+                font-weight: bold;
+                color: #ffcc00;
+                margin-bottom: 3px; /* Уменьшаем отступ */
+            }
+
+            .profile-balance {
+                font-size: 1rem; /* Уменьшаем размер шрифта */
+                color: #003cff;
+                font-weight: bold;
+            }
+            .column {
+                width: 80px;
+                height: 100px;
+            }
+
+            .column-inner {
+                font-size: 20px;
+            }
+            .fruit {
+                font-size: 50px;
+            }
+
+            #spinButton {
+                font-size: 1.4rem;
+                padding: 15px 40px;
+            }
+
+            #message {
+                font-size: 2rem;
+                top: -70px;
+            }
+
+            .bet-container {
+                font-size: 1.2rem;
+            }
+
+            .bet-value {
+                font-size: 1.8rem;
+            }
+
+            .profile-container {
+                width: 180px;
+                left: 0;
+                top: -500px;
+            }
+
+            .profile-avatar {
+                width: 70px;
+                height: 70px;
+            }
+
+            .profile-name {
+                font-size: 1.3rem;
+            }
+
+            .profile-balance {
+                font-size: 1rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .navbar a {
+                font-size: 0.9rem;
+                margin: 0 5px;
+            }
+
+            .slot-container {
+                padding: 5px;
+                gap: 3px;
+            }
+
+            .column {
+                width: 60px;
+                height: 80px;
+            }
+
+            .column-inner {
+                font-size: 16px;
+            }
+
+            #spinButton {
+                font-size: 1.2rem;
+                padding: 12px 30px;
+            }
+
+            #message {
+                font-size: 1.8rem;
+                top: -50px;
+            }
+
+            .bet-container {
+                font-size: 1rem;
+            }
+
+            .bet-value {
+                font-size: 1.5rem;
+            }
+            .main-container {
+                position: relative;
+                left: -140px;
+                top: -330px;
+                height: auto; /* Убираем жесткую высоту */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px; /* Уменьшаем расстояние между элементами */
+                width: 20%; /* Увеличиваем ширину контейнера */
+            }
+
+            .profile-container {
+                display: flex;
+                position: relative;
+                flex-direction: column;
+                align-items: center;
+                background: rgba(0, 0, 0, 0.8);
+                padding: 10px; /* Уменьшаем отступы */
+                border-radius: 8px; /* Уменьшаем радиус скругления */
+                box-shadow: 0 0 10px rgba(0, 149, 255, 0.5); /* Уменьшаем тень */
+                text-align: center;
+                width: 120px; /* Уменьшаем ширину */
+                top: -150px; /* Уменьшаем сдвиг */
+                left: 0; /* Убираем сдвиг */
+            }
+
+            .profile-avatar {
+                width: 40px; /* Уменьшаем размер аватара */
+                height: 40px; /* Уменьшаем размер аватара */
+                border-radius: 50%; /* Округляем аватар */
+                border: 2px solid #ffcc00; /* Уменьшаем толщину рамки */
+                box-shadow: 0 0 8px rgba(255, 204, 0, 0.8); /* Уменьшаем тень */
+                margin-bottom: 8px; /* Уменьшаем отступ */
+            }
+
+
+            #middleRow {
+                position: relative; /* Для точного позиционирования линии */
+                padding-top: 10px; /* Немного отодвигаем содержимое */
+            }
+
+            #middleRow::before {
+                z-index: 9;
+                content: "";
+                position: absolute;
+                top: 50px; /* Линия будет располагаться прямо над колонками */
+                left: 0;
+                width: 100%; /* Линия растягивается на всю ширину ряда */
+                height: 2px; /* Толщина линии */
+                background-color: #ff9000; /* Цвет линии */
+            }
+
+
+            .profile-name {
+                font-size: 1.2rem;
+            }
+
+            .profile-balance {
+                font-size: 0.9rem;
+            }
+        }
+
+
+
+
+    </style>
+    <title>Slot Machine</title>
+</head>
+<body>
+<div class="navbar">
+    <a href="mainIndex">Домой</a>
+    <a href="profile">Мой профиль</a>
+    <a href="chat">Чат/Обсуждение/Вопросы</a>
+    <a href="help">Помощь</a>
+</div>
+
+<div class="slot-container">
+    <div class="slot-row" id="topRow"></div>
+    <div class="slot-row" id="middleRow">
+        <div class="slot-column"></div>
+        <div class="slot-column"></div>
+        <div class="slot-column"></div>
+        <div class="slot-column"></div>
+        <div class="slot-column"></div>
+    </div>
+    <div class="slot-row" id="bottomRow"></div>
+    <div class="bet-controls">
+        <div class="bet-container">
+            <button class="decrease">-</button>
+            <div class="bet-value" id="betAmount">1</div>
+            <button class="increase">+</button>
+        </div>
+        <button id="spinButton">Spin</button>
+    </div>
+
+    <div id="message"></div>
+</div>
+
+
+
+<div class="main-container">
+    <div class="profile-container">
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User Avatar" class="profile-avatar">
+        <div class="profile-name">
+            <span th:if="${user != null}" th:text="${user.username}"></span>
+            <span th:unless="${user != null}">Guest</span>
+        </div>
+        <div class="profile-balance"><strong>$</strong> <span th:if="${user != null}" th:text="${user.amount}"></span></div>
+    </div>
+</div>
+
+<script>
+    let fruits = [];
+    let betAmount = 1;
+
+    // Запрашиваем фрукты перед каждым спином
+    function fetchFruits(callback) {
+        fetch('/slotGame/fruits')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Фрукты:', data);
+                fruits = data;  // Обновляем фрукты
+                renderSlotMachine(fruits);  // Перерисовываем слот-машину
+                if (callback) callback();  // Запускаем спин после загрузки фруктов
+            })
+            .catch(error => {
+                console.error('Ошибка при получении фруктов:', error);
+            });
+    }
+
+    function getRandomFruit() {
+        const randomIndex = Math.floor(Math.random() * fruits.length);
+        return fruits[randomIndex];
+    }
+
+    function createColumn(fruitRow) {
+        const column = document.createElement('div');
+        column.classList.add('column');
+        const fruitContainer = document.createElement('div');
+        fruitContainer.classList.add('fruit-container');
+        fruitRow.forEach(fruit => {
+            const fruitDiv = document.createElement('div');
+            fruitDiv.classList.add('fruit');
+            fruitDiv.textContent = fruit;
+            fruitContainer.appendChild(fruitDiv);
+        });
+        column.appendChild(fruitContainer);
+        return { column, fruitContainer };
+    }
+
+    // Отрисовка слот-машины
+    function renderSlotMachine(fruits) {
+        const rows = document.querySelectorAll('.slot-row');
+        rows.forEach(row => row.innerHTML = '');
+
+        fruits.forEach((row, rowIndex) => {
+            const rowElement = rows[rowIndex];
+            row.forEach(fruit => {
+                const { column, fruitContainer } = createColumn([fruit]);
+                rowElement.appendChild(column);
+            });
+        });
+    }
+
+    function playSound(soundFile) {
+        const audio = new Audio(soundFile);
+        audio.play();
+        return audio;
+    }
+
+    function spin() {
+        const message = document.getElementById('message');
+        const spinButton = document.getElementById('spinButton');
+
+        message.textContent = '';
+        message.style.opacity = 0;
+        message.classList.remove('win', 'lose'); // Очищаем прошлый результат
+        spinButton.disabled = true; // ❌ Отключаем кнопку "Spin"
+
+        // Запускаем звук вращения
+        const spinSound = playSound('/sound/slot-machine-winner-ni-sound-1-00-06.mp3');
+
+        fetch('/slotGame/fruits')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Фрукты от сервера:', data);
+                const rows = document.querySelectorAll('.slot-row');
+                let totalColumns = 0;
+                let columnsFinished = 0;
+
+                rows.forEach((row, rowIndex) => {
+                    const columns = row.querySelectorAll('.column');
+                    totalColumns += columns.length;
+
+                    columns.forEach((column, colIndex) => {
+                        const fruitContainer = column.querySelector('.fruit-container');
+                        fruitContainer.innerHTML = '';
+                        let fruitsForColumn = [];
+
+                        // Добавляем больше фруктов для длинного вращения
+                        for (let i = 0; i < 50; i++) {
+                            data.forEach(row => fruitsForColumn.push(row[colIndex]));
+                        }
+
+                        fruitsForColumn.forEach(fruit => {
+                            const fruitDiv = document.createElement('div');
+                            fruitDiv.classList.add('fruit');
+                            fruitDiv.textContent = fruit;
+                            fruitContainer.appendChild(fruitDiv);
+                        });
+
+                        fruitContainer.style.transition = 'none';
+                        fruitContainer.style.transform = `translateY(-${fruitContainer.scrollHeight}px)`;
+                    });
+
+                    setTimeout(() => {
+                        columns.forEach((column, colIndex) => {
+                            const fruitContainer = column.querySelector('.fruit-container');
+                            const duration = 3 + colIndex * 0.5;
+                            fruitContainer.style.transition = `transform ${duration}s cubic-bezier(0.15, 0.85, 0.45, 1)`;
+                            fruitContainer.style.transform = 'translateY(0)';
+
+                            // ✅ Отслеживание конца анимации всех барабанов
+                            fruitContainer.addEventListener('transitionend', () => {
+                                columnsFinished++;
+                                if (columnsFinished === totalColumns) {
+                                    spinSound.pause();
+                                    spinSound.currentTime = 0;
+                                    spinButton.disabled = false;
+                                }
+                            }, { once: true });
+
+                        });
+                    }, 100);
+
+                    setTimeout(() => {
+                        columns.forEach((column) => {
+                            const fruitContainer = column.querySelector('.fruit-container');
+                            fruitContainer.style.transition = 'transform 0.5s ease-out';
+                            fruitContainer.style.transform = 'translateY(0)';
+                        });
+                    }, 2500 + rowIndex * 500);
+
+                    setTimeout(() => {
+                        columns.forEach((column, colIndex) => {
+                            const fruitContainer = column.querySelector('.fruit-container');
+                            const finalFruit = data[rowIndex][colIndex];
+                            fruitContainer.innerHTML = '';
+                            const fruitDiv = document.createElement('div');
+                            fruitDiv.classList.add('fruit');
+                            fruitDiv.textContent = finalFruit;
+                            fruitContainer.appendChild(fruitDiv);
+                        });
+                    }, 3500 + rowIndex * 500);
+                });
+
+                // Обработка результата после окончания вращения
+                setTimeout(() => {
+                    let finalSelection = [];
+                    rows.forEach((row, rowIndex) => {
+                        const columns = row.querySelectorAll('.column');
+                        columns.forEach((column, colIndex) => {
+                            finalSelection.push(data[rowIndex][colIndex]);
+                        });
+                    });
+
+                    fetch('/slotGame/play', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ fruits: finalSelection, betAmount: betAmount })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.message) {
+                                message.textContent = data.message;
+
+                                // Проверка сообщений об ошибках
+                                if (data.message === "Вы не авторизованы!") {
+                                } else if (data.message === "Недостаточно средств!") {
+
+                                }
+
+                                message.classList.add(data.win ? 'win' : 'lose');
+                                message.style.opacity = 1;
+                                document.querySelector('.profile-balance span').textContent = data.balance;
+
+                                // Воспроизводим звук выигрыша или проигрыша
+                                const resultSound = data.win ?
+                                    '/sound/monkey-slot (mp3cut.net).mp3' :
+                                    'https://www.bensound.com/bensound-music/bensound-hey.mp3';
+
+                                const winLoseSound = playSound(resultSound);
+                                message.addEventListener('transitionend', () => {
+                                    winLoseSound.pause();
+                                    winLoseSound.currentTime = 0;
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Ошибка при отправке данных на сервер:', error);
+                            spinButton.disabled = false; // Включаем кнопку при ошибке
+                        });
+
+
+                }, 6000);
+            })
+            .catch(error => {
+                console.error('Ошибка при получении фруктов от сервера:', error);
+                spinButton.disabled = false; // Включаем кнопку при ошибке
+            });
+    }
+
+    // Обработчики кнопок
+    document.getElementById('spinButton').addEventListener('click', spin);
+    document.querySelector('.increase').addEventListener('click', () => {
+        betAmount += 1;
+        document.getElementById('betAmount').textContent = betAmount;
+    });
+    document.querySelector('.decrease').addEventListener('click', () => {
+        if (betAmount > 1) {
+            betAmount -= 1;
+            document.getElementById('betAmount').textContent = betAmount;
+        }
+    });
+
+    // Загружаем фрукты при запуске страницы
+    fetchFruits();
+
+
+</script>
+</body>
+</html>
